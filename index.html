@@ -1,293 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<!-- ✅ UNIVERSAL VIEWPORT (iPhone + Android + Notch Support) -->
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-
-<title>Lassi Magic — Digital Menu</title>
-
-<!-- ✅ PWA FEEL -->
-<meta name="theme-color" content="#c8f135">
-
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<title>Lassi Magic Menu</title>
 
 <style>
-
-/* ✅ GLOBAL RESET */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-html{
-  font-size: clamp(14px, 2.5vw, 18px);
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 body{
-  font-family:'Nunito',sans-serif;
+  font-family:Arial, sans-serif;
   background:#0a0e06;
-  color:#f0f4e0;
-  overflow-x:hidden;
-
-  /* ✅ SAFE AREA FIX */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-
-  overscroll-behavior-y:none;
-}
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:50px 20px 30px;
-}
-
-.hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(60px,14vw,150px);
-  line-height:.9;
-}
-
-.hero-title span{color:#c8f135;}
-
-.hero-sub{
-  color:#a0b060;
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* NAV */
-.nav-wrap{
-  position:sticky;
-  top:0;
-  background:#0a0e06;
-  z-index:100;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav{
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-}
-
-.nav button{
-  flex-shrink:0;
-  padding:14px 18px;
-  border:none;
-  background:none;
-  color:#777;
-  font-weight:600;
-  cursor:pointer;
-  scroll-snap-align:center;
-}
-
-.nav button.active{
-  color:#c8f135;
-}
-
-/* SEARCH */
-.search{
+  color:#fff;
   padding:20px;
 }
 
-.search input{
-  width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#1a2010;
-  color:#fff;
+/* HEADER */
+h1{
+  text-align:center;
+  font-size:40px;
+  margin-bottom:20px;
+  color:#c8f135;
+}
+
+/* SECTION */
+.section{
+  margin-bottom:30px;
+}
+
+.section h2{
+  font-size:22px;
+  margin-bottom:10px;
+  color:#ffd60a;
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
 }
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:12px;
-  padding:20px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:10px;
 }
 
-/* CARD */
-.card{
-  background:#1a2010;
-  border-radius:12px;
-  padding:14px;
+/* ITEM */
+.item{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  transition:.2s;
+  background:#1a2010;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:15px;
 }
 
-.card:hover{
-  transform:translateY(-2px);
-}
-
+/* PRICE */
 .price{
   color:#c8f135;
-  font-weight:700;
+  font-weight:bold;
 }
 
-/* BUTTON */
-.add-btn{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  border:none;
-  background:#c8f135;
-  color:#000;
-  font-size:18px;
-  cursor:pointer;
+/* MOBILE */
+@media(max-width:500px){
+  h1{font-size:28px;}
 }
-
-/* CART */
-.cart{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#c8f135;
-  color:#000;
-  padding:14px 26px;
-  border-radius:40px;
-  font-weight:700;
-  display:none;
-}
-
-/* PERFORMANCE FIX */
-@media (max-width:600px){
-  .hero-title{
-    font-size:80px;
-  }
-}
-
-/* LANDSCAPE FIX */
-@media (orientation:landscape) and (max-height:500px){
-  .hero{
-    padding:20px;
-  }
-  .hero-title{
-    font-size:60px;
-  }
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-title">Lassi <span>Magic</span></div>
-  <div class="hero-sub">Fresh & Natural Café</div>
+<h1>Lassi Magic</h1>
+
+<!-- FRESH LASSI -->
+<div class="section">
+<h2>FRESH LASSI</h2>
+<div class="grid">
+<div class="item"><span>Sweet Lassi</span><span class="price">₹50</span></div>
+<div class="item"><span>Banana Lassi</span><span class="price">₹60</span></div>
+<div class="item"><span>Mango Lassi</span><span class="price">₹70</span></div>
+<div class="item"><span>Dry Fruit Lassi</span><span class="price">₹80</span></div>
+</div>
 </div>
 
-<!-- NAV -->
-<div class="nav-wrap">
-  <div class="nav" id="nav"></div>
+<!-- FALOODA -->
+<div class="section">
+<h2>FALOODA</h2>
+<div class="grid">
+<div class="item"><span>Rose Falooda</span><span class="price">₹80</span></div>
+<div class="item"><span>Kesar Falooda</span><span class="price">₹90</span></div>
+<div class="item"><span>Royal Falooda</span><span class="price">₹115</span></div>
+<div class="item"><span>Paan Falooda</span><span class="price">₹100</span></div>
+</div>
 </div>
 
-<!-- SEARCH -->
-<div class="search">
-  <input type="text" placeholder="Search..." oninput="searchMenu(this.value)">
+<!-- ICE CREAM -->
+<div class="section">
+<h2>ICE CREAM SCOOPS</h2>
+<div class="grid">
+<div class="item"><span>Mango / Strawberry</span><span class="price">₹40</span></div>
+<div class="item"><span>Black Current / Butterscotch</span><span class="price">₹40</span></div>
+<div class="item"><span>Nutella / Pistachio / Butterscotch</span><span class="price">₹50</span></div>
+</div>
 </div>
 
-<!-- MENU -->
-<div id="menu"></div>
+<!-- DESSERTS -->
+<div class="section">
+<h2>DESSERTS & SUNDAES</h2>
+<div class="grid">
+<div class="item"><span>Hot Brownie / Choco Fudge</span><span class="price">₹80</span></div>
+<div class="item"><span>Fruit Salad / Fried Brownie</span><span class="price">₹80</span></div>
+<div class="item"><span>Boing</span><span class="price">₹70</span></div>
+<div class="item"><span>Nutella Fudge</span><span class="price">₹100</span></div>
+<div class="item"><span>Death by Chocolate / Nutella Sundae</span><span class="price">₹120</span></div>
+<div class="item"><span>Coconut Sundae / Choco Oreo Sundae</span><span class="price">₹110</span></div>
+<div class="item"><span>Brownie Sizzler / Nutella Sizzler</span><span class="price">₹170</span></div>
+</div>
+</div>
 
-<!-- CART -->
-<div class="cart" id="cart">Cart ₹0</div>
+<!-- CAKE SHAKE -->
+<div class="section">
+<h2>CAKE SHAKE</h2>
+<div class="grid">
+<div class="item"><span>Choco Truffle</span><span class="price">₹130</span></div>
+<div class="item"><span>Choco Oreo</span><span class="price">₹130</span></div>
+<div class="item"><span>Snickers / Mud Coffee / Mud Oreo</span><span class="price">₹130</span></div>
+<div class="item"><span>Coconut / Butterscotch</span><span class="price">₹130</span></div>
+</div>
+</div>
 
-<script>
+<!-- CHOCOLATE SHAKES -->
+<div class="section">
+<h2>CHOCOLATE SHAKES</h2>
+<div class="grid">
+<div class="item"><span>Belgian Chocolate</span><span class="price">₹90</span></div>
+<div class="item"><span>Watermelon</span><span class="price">₹70</span></div>
+<div class="item"><span>Vanilla</span><span class="price">₹70</span></div>
+<div class="item"><span>Kitkat</span><span class="price">₹90</span></div>
+<div class="item"><span>Mango</span><span class="price">₹80</span></div>
+<div class="item"><span>Hazelnut Pineapple</span><span class="price">₹110</span></div>
+<div class="item"><span>Death by Chocolate</span><span class="price">₹120</span></div>
+</div>
+</div>
 
-/* MENU DATA */
-const MENU = [
-  {cat:"Lassi",items:[
-    {name:"Sweet Lassi",price:50},
-    {name:"Mango Lassi",price:70}
-  ]},
-  {cat:"Falooda",items:[
-    {name:"Rose Falooda",price:80},
-    {name:"Royal Falooda",price:115}
-  ]},
-  {cat:"Shakes",items:[
-    {name:"Chocolate Shake",price:120},
-    {name:"KitKat Shake",price:140}
-  ]},
-  {cat:"Coffee",items:[
-    {name:"Cold Coffee",price:100},
-    {name:"Caramel Coffee",price:120}
-  ]}
-];
+<!-- FRUIT SHAKES -->
+<div class="section">
+<h2>FRUIT SHAKES</h2>
+<div class="grid">
+<div class="item"><span>Apple</span><span class="price">₹70</span></div>
+<div class="item"><span>Musk Melon</span><span class="price">₹70</span></div>
+<div class="item"><span>Franco Mocha</span><span class="price">₹80</span></div>
+<div class="item"><span>Chikoo</span><span class="price">₹80</span></div>
+<div class="item"><span>Tropical Mix Fruit</span><span class="price">₹90</span></div>
+<div class="item"><span>Hazelnut Strawberry</span><span class="price">₹110</span></div>
+<div class="item"><span>Mix Fruit</span><span class="price">₹80</span></div>
+</div>
+</div>
 
-let total = 0;
+<!-- COLD COFFEE -->
+<div class="section">
+<h2>COLD COFFEE</h2>
+<div class="grid">
+<div class="item"><span>Black Rock Coffee</span><span class="price">₹90</span></div>
+<div class="item"><span>Belgium Coffee</span><span class="price">₹100</span></div>
+<div class="item"><span>Franco Coffee</span><span class="price">₹110</span></div>
+<div class="item"><span>Caramel Coffee</span><span class="price">₹120</span></div>
+<div class="item"><span>Tropical Mix Coffee</span><span class="price">₹130</span></div>
+</div>
+</div>
 
-/* BUILD MENU */
-function buildMenu(){
-  const root = document.getElementById("menu");
-  const nav = document.getElementById("nav");
+<!-- HOT DRINK -->
+<div class="section">
+<h2>HOT DRINK</h2>
+<div class="grid">
+<div class="item"><span>Hot Coffee</span><span class="price">₹60</span></div>
+<div class="item"><span>Hot Chocolate</span><span class="price">₹80</span></div>
+<div class="item"><span>Horlicks</span><span class="price">₹70</span></div>
+</div>
+</div>
 
-  MENU.forEach((sec,i)=>{
+<!-- SODA -->
+<div class="section">
+<h2>SODA POPS</h2>
+<div class="grid">
+<div class="item"><span>Various Soda Items</span><span class="price">₹40–₹60</span></div>
+</div>
+</div>
 
-    // nav
-    const btn = document.createElement("button");
-    btn.innerText = sec.cat;
-    btn.onclick = ()=>document.getElementById("sec"+i).scrollIntoView({behavior:"smooth"});
-    nav.appendChild(btn);
+<!-- FRESH JUICE -->
+<div class="section">
+<h2>FRESH JUICE</h2>
+<div class="grid">
+<div class="item"><span>Orange</span><span class="price">₹60</span></div>
+<div class="item"><span>Watermelon</span><span class="price">₹60</span></div>
+<div class="item"><span>Mango</span><span class="price">₹70</span></div>
+<div class="item"><span>Muskmelon</span><span class="price">₹70</span></div>
+<div class="item"><span>Mixed Fruit with Lime</span><span class="price">₹110</span></div>
+</div>
+</div>
 
-    // section
-    const section = document.createElement("div");
-    section.id = "sec"+i;
+<!-- PIZZA -->
+<div class="section">
+<h2>FRESH PIZZA</h2>
+<div class="grid">
+<div class="item"><span>Regular Pizza</span><span class="price">₹120</span></div>
+<div class="item"><span>Large Pizza</span><span class="price">₹180</span></div>
+</div>
+</div>
 
-    const title = document.createElement("h2");
-    title.style.padding="20px";
-    title.innerText = sec.cat;
+<!-- EAT ALL -->
+<div class="section">
+<h2>EAT ALL YOU WANT</h2>
+<div class="grid">
+<div class="item"><span>Hash Browns</span><span class="price">₹80</span></div>
+<div class="item"><span>Grilled Sandwich</span><span class="price">₹90</span></div>
+<div class="item"><span>Big Burgers</span><span class="price">₹120</span></div>
+<div class="item"><span>Maggi Masala</span><span class="price">₹80</span></div>
+</div>
 
-    const grid = document.createElement("div");
-    grid.className = "grid";
-
-    sec.items.forEach(item=>{
-      const card = document.createElement("div");
-      card.className="card";
-
-      card.innerHTML = `
-        <div>${item.name}<br><span class="price">₹${item.price}</span></div>
-        <button class="add-btn">+</button>
-      `;
-
-      card.querySelector("button").onclick=()=>{
-        total += item.price;
-        updateCart();
-      };
-
-      grid.appendChild(card);
-    });
-
-    section.appendChild(title);
-    section.appendChild(grid);
-    root.appendChild(section);
-
-  });
-}
-
-/* CART */
-function updateCart(){
-  const cart = document.getElementById("cart");
-  cart.style.display="block";
-  cart.innerText="Cart ₹"+total;
-}
-
-/* SEARCH */
-function searchMenu(q){
-  q=q.toLowerCase();
-  document.querySelectorAll(".card").forEach(c=>{
-    c.style.display = c.innerText.toLowerCase().includes(q) ? "" : "none";
-  });
-}
-
-buildMenu();
-
-</script>
+<h3 style="margin-top:10px;color:#aaa;">Add Ons</h3>
+<div class="grid">
+<div class="item"><span>Cheese / Corn / Chilli</span><span class="price">₹20</span></div>
+</div>
+</div>
 
 </body>
 </html>
