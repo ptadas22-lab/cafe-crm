@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NBC | Nothing Before Coffee Menu</title>
+    <title>NBC | Nothing Before Coffee Digital Menu</title>
     
-    <!-- Premium Fonts -->
+    <!-- Premium Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         :root {
-            --bg: #F8F5F2;
+            --bg: #FDFCFB;
             --surface: #FFFFFF;
             --primary: #3C2A21; /* NBC Coffee Brown */
             --secondary: #D5CEA3; /* NBC Gold/Tan */
             --text-main: #1A1A1A;
-            --text-muted: #7D6E66;
-            --white: #FFFFFF;
+            --text-muted: #6D5D55;
             --wa-green: #25D366;
+            --header-h: 185px; /* Exact height for sticky header */
         }
 
         [data-theme="dark"] {
@@ -29,10 +29,9 @@
             --primary: #D5CEA3;
             --secondary: #3C2A21;
             --text-main: #F5F5F5;
-            --text-muted: #A0A0A0;
+            --text-muted: #A0938E;
         }
 
-        /* Essential Reset for Alignment */
         * {
             margin: 0;
             padding: 0;
@@ -42,58 +41,66 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #E0E0E0; /* Desktop background color */
+            background-color: #F0F0F0; /* Outside background for desktop */
             color: var(--text-main);
             display: flex;
             justify-content: center;
         }
 
-        /* Mobile Container - This fixes the layout alignment */
-        .app-container {
+        /* The App Container - Keeps alignment perfect on all screens */
+        .app-wrapper {
             width: 100%;
-            max-width: 500px; /* Looks like a phone on desktop */
+            max-width: 480px; 
             background-color: var(--bg);
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
         }
 
-        /* Fixed Header Section */
-        .header-fixed {
+        /* Sticky Header */
+        .sticky-header {
             position: sticky;
             top: 0;
             background-color: var(--bg);
             z-index: 1000;
-            padding: 15px 20px 10px 20px;
+            padding: 15px 20px 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .top-bar {
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
 
-        .brand-logo {
+        .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary);
         }
 
-        /* Search Bar Alignment */
-        .search-row {
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            background: var(--surface);
             display: flex;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* Search Bar Alignment */
+        .search-area {
+            position: relative;
             margin-bottom: 15px;
         }
 
-        .search-wrapper {
-            position: relative;
-            flex: 1;
-        }
-
-        .search-wrapper i {
+        .search-area i {
             position: absolute;
             left: 12px;
             top: 50%;
@@ -110,233 +117,224 @@
             color: var(--text-main);
             font-size: 14px;
             outline: none;
+            transition: 0.3s;
         }
 
-        .theme-toggle {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            border: 1px solid var(--secondary);
-            background: var(--surface);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-        }
-
-        /* Category Chips Horizontal Scroll */
-        .category-scroll {
+        /* Horizontal Category Chips */
+        .category-nav {
             display: flex;
             overflow-x: auto;
-            gap: 10px;
-            padding-bottom: 10px;
+            gap: 8px;
+            padding-bottom: 5px;
             scrollbar-width: none;
         }
+        .category-nav::-webkit-scrollbar { display: none; }
 
-        .category-scroll::-webkit-scrollbar { display: none; }
-
-        .cat-chip {
-            padding: 8px 18px;
+        .chip {
+            padding: 8px 16px;
             background: var(--surface);
             border: 1px solid var(--secondary);
-            border-radius: 25px;
+            border-radius: 20px;
             white-space: nowrap;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             text-decoration: none;
             color: var(--text-main);
         }
 
-        .cat-chip.active {
+        .chip.active {
             background: var(--primary);
             color: var(--bg);
             border-color: var(--primary);
         }
 
-        /* Menu Items Alignment */
-        .menu-body {
-            padding: 10px 20px 100px 20px;
+        /* Menu List Alignment */
+        .menu-list {
+            padding: 10px 20px 120px;
         }
 
-        .section-header {
+        .category-title {
             font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
             color: var(--primary);
-            scroll-margin-top: 180px; /* Prevents header overlap */
+            scroll-margin-top: 200px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .menu-item {
+        .item-row {
             background: var(--surface);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
 
-        .item-text {
+        .item-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-main);
             flex: 1;
-            padding-right: 15px;
-        }
-
-        .item-text h3 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .item-text p {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
         }
 
         .item-price {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--primary);
-            white-space: nowrap;
+            margin-left: 10px;
         }
 
-        /* WhatsApp Floating Button */
-        .wa-btn {
+        /* WhatsApp Button */
+        .whatsapp-fixed {
             position: fixed;
             bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 40px);
-            max-width: 460px;
+            max-width: 440px;
             background-color: var(--wa-green);
             color: white;
             text-align: center;
             padding: 16px;
-            border-radius: 16px;
+            border-radius: 15px;
             text-decoration: none;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.25);
             z-index: 2000;
         }
 
-        /* Search No-Result State */
-        #emptyState {
+        #noResult {
             display: none;
             text-align: center;
-            padding: 50px 20px;
+            padding: 50px 0;
             color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="app-wrapper">
     
     <!-- HEADER -->
-    <div class="header-fixed">
-        <div class="top-bar">
-            <div class="brand-logo">Nothing Before Coffee</div>
+    <div class="sticky-header">
+        <div class="header-top">
+            <div class="logo">Nothing Before Coffee</div>
             <div class="theme-toggle" onclick="toggleTheme()">
-                <i data-lucide="moon" id="themeIcon"></i>
+                <i data-lucide="moon" id="icon"></i>
             </div>
         </div>
 
-        <div class="search-row">
-            <div class="search-wrapper">
-                <i data-lucide="search" size="18"></i>
-                <input type="text" id="searchInput" placeholder="Search for your favorite brew...">
-            </div>
+        <div class="search-area">
+            <i data-lucide="search" size="18"></i>
+            <input type="text" id="searchInput" placeholder="Search for coffee, shakes...">
         </div>
 
-        <div class="category-scroll">
-            <a href="#hot" class="cat-chip active">Hot Coffee</a>
-            <a href="#cold" class="cat-chip">Cold Coffee</a>
-            <a href="#shakes" class="cat-chip">Thick Shakes</a>
-            <a href="#mocktails" class="cat-chip">Mocktails</a>
+        <div class="category-nav">
+            <a href="#hot" class="chip active">Hot Coffee</a>
+            <a href="#cold" class="chip">Cold Coffee</a>
+            <a href="#mocktails" class="chip">Mocktails</a>
+            <a href="#shakes" class="chip">Shakes</a>
+            <a href="#tea" class="chip">Iced Tea</a>
+            <a href="#brain" class="chip">Brain Freezers</a>
+            <a href="#extras" class="chip">Extras</a>
         </div>
     </div>
 
-    <!-- MENU ITEMS -->
-    <div class="menu-body" id="menuListing">
+    <!-- MENU LIST -->
+    <div class="menu-list" id="menuList">
         
-        <div id="emptyState">No drinks found. Try searching for something else!</div>
+        <div id="noResult">No matches found. Try another search.</div>
 
-        <!-- Hot Coffee Section -->
-        <div class="menu-group" id="hot">
-            <h2 class="section-header">Hot Coffee</h2>
-            
-            <div class="menu-item" data-name="cappuccino">
-                <div class="item-text">
-                    <h3>Cappuccino</h3>
-                    <p>Signature espresso with steamed milk and deep foam layer.</p>
-                </div>
-                <div class="item-price">₹149</div>
-            </div>
-
-            <div class="menu-item" data-name="americano">
-                <div class="item-text">
-                    <h3>Americano</h3>
-                    <p>Bold espresso shot smoothed out with hot water.</p>
-                </div>
-                <div class="item-price">₹129</div>
-            </div>
+        <!-- Hot Coffee -->
+        <div class="section" id="hot">
+            <h2 class="category-title">🔥 Hot Coffee</h2>
+            <div class="item-row" data-name="espresso"> <span class="item-name">Espresso</span> <span class="item-price">₹70</span> </div>
+            <div class="item-row" data-name="americano"> <span class="item-name">Americano</span> <span class="item-price">₹80</span> </div>
+            <div class="item-row" data-name="cappuccino"> <span class="item-name">Cappuccino</span> <span class="item-price">₹120</span> </div>
+            <div class="item-row" data-name="latte"> <span class="item-name">Latte</span> <span class="item-price">₹130</span> </div>
+            <div class="item-row" data-name="vanilla cappuccino"> <span class="item-name">Vanilla Cappuccino</span> <span class="item-price">₹140</span> </div>
+            <div class="item-row" data-name="hazelnut cappuccino"> <span class="item-name">Hazelnut Cappuccino</span> <span class="item-price">₹140</span> </div>
+            <div class="item-row" data-name="caramel cappuccino"> <span class="item-name">Caramel Cappuccino</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="mocha"> <span class="item-name">Mocha</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="hot chocolate"> <span class="item-name">Hot Chocolate</span> <span class="item-price">₹160</span> </div>
         </div>
 
-        <!-- Cold Coffee Section -->
-        <div class="menu-group" id="cold">
-            <h2 class="section-header">Cold Coffee</h2>
-            
-            <div class="menu-item" data-name="frappe">
-                <div class="item-text">
-                    <h3>Classic Frappe</h3>
-                    <p>Rich coffee blended with ice and topped with cream.</p>
-                </div>
-                <div class="item-price">₹189</div>
-            </div>
-
-            <div class="menu-item" data-name="hazelnut latte">
-                <div class="item-text">
-                    <h3>Iced Hazelnut Latte</h3>
-                    <p>Nutty hazelnut notes with chilled espresso and milk.</p>
-                </div>
-                <div class="item-price">₹219</div>
-            </div>
+        <!-- Cold Coffee -->
+        <div class="section" id="cold">
+            <h2 class="category-title">❄️ Cold Coffee</h2>
+            <div class="item-row" data-name="classic cold coffee"> <span class="item-name">Classic Cold Coffee</span> <span class="item-price">₹130</span> </div>
+            <div class="item-row" data-name="cold coffee with ice cream"> <span class="item-name">Cold Coffee with Ice Cream</span> <span class="item-price">₹160</span> </div>
+            <div class="item-row" data-name="hazelnut cold coffee"> <span class="item-name">Hazelnut Cold Coffee</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="caramel cold coffee"> <span class="item-name">Caramel Cold Coffee</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="vanilla cold coffee"> <span class="item-name">Vanilla Cold Coffee</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="mocha cold coffee"> <span class="item-name">Mocha Cold Coffee</span> <span class="item-price">₹160</span> </div>
+            <div class="item-row" data-name="irish cold coffee"> <span class="item-name">Irish Cold Coffee</span> <span class="item-price">₹170</span> </div>
+            <div class="item-row" data-name="oreo cold coffee"> <span class="item-name">Oreo Cold Coffee</span> <span class="item-price">₹180</span> </div>
+            <div class="item-row" data-name="kitkat cold coffee"> <span class="item-name">KitKat Cold Coffee</span> <span class="item-price">₹180</span> </div>
         </div>
 
-        <!-- Shakes Section -->
-        <div class="menu-group" id="shakes">
-            <h2 class="section-header">Thick Shakes</h2>
-            <div class="menu-item" data-name="belgian chocolate">
-                <div class="item-text">
-                    <h3>Belgian Chocolate</h3>
-                    <p>Indulgent dark chocolate shake for cocoa lovers.</p>
-                </div>
-                <div class="item-price">₹239</div>
-            </div>
+        <!-- Mocktails -->
+        <div class="section" id="mocktails">
+            <h2 class="category-title">🍹 Mocktails</h2>
+            <div class="item-row" data-name="virgin mojito"> <span class="item-name">Virgin Mojito</span> <span class="item-price">₹120</span> </div>
+            <div class="item-row" data-name="blue lagoon"> <span class="item-name">Blue Lagoon</span> <span class="item-price">₹130</span> </div>
+            <div class="item-row" data-name="green apple mojito"> <span class="item-name">Green Apple Mojito</span> <span class="item-price">₹130</span> </div>
+            <div class="item-row" data-name="strawberry mojito"> <span class="item-name">Strawberry Mojito</span> <span class="item-price">₹140</span> </div>
+            <div class="item-row" data-name="watermelon mojito"> <span class="item-name">Watermelon Mojito</span> <span class="item-price">₹140</span> </div>
+            <div class="item-row" data-name="passion fruit mocktail"> <span class="item-name">Passion Fruit Mocktail</span> <span class="item-price">₹150</span> </div>
         </div>
 
-        <!-- Mocktails Section -->
-        <div class="menu-group" id="mocktails">
-            <h2 class="section-header">Mocktails</h2>
-            <div class="menu-item" data-name="mojito">
-                <div class="item-text">
-                    <h3>Virgin Mojito</h3>
-                    <p>Refreshing mint and lime with bubbly soda.</p>
-                </div>
-                <div class="item-price">₹129</div>
-            </div>
+        <!-- Shakes -->
+        <div class="section" id="shakes">
+            <h2 class="category-title">🥤 Shakes</h2>
+            <div class="item-row" data-name="chocolate shake"> <span class="item-name">Chocolate Shake</span> <span class="item-price">₹160</span> </div>
+            <div class="item-row" data-name="kitkat shake"> <span class="item-name">KitKat Shake</span> <span class="item-price">₹180</span> </div>
+            <div class="item-row" data-name="oreo shake"> <span class="item-name">Oreo Shake</span> <span class="item-price">₹180</span> </div>
+            <div class="item-row" data-name="brownie shake"> <span class="item-name">Brownie Shake</span> <span class="item-price">₹190</span> </div>
+            <div class="item-row" data-name="butterscotch shake"> <span class="item-name">Butterscotch Shake</span> <span class="item-price">₹160</span> </div>
+            <div class="item-row" data-name="strawberry shake"> <span class="item-name">Strawberry Shake</span> <span class="item-price">₹160</span> </div>
+            <div class="item-row" data-name="mango shake"> <span class="item-name">Mango Shake</span> <span class="item-price">₹150</span> </div>
+            <div class="item-row" data-name="banana shake"> <span class="item-name">Banana Shake</span> <span class="item-price">₹140</span> </div>
+        </div>
+
+        <!-- Iced Tea -->
+        <div class="section" id="tea">
+            <h2 class="category-title">🧊 Iced Tea</h2>
+            <div class="item-row" data-name="lemon iced tea"> <span class="item-name">Lemon Iced Tea</span> <span class="item-price">₹90</span> </div>
+            <div class="item-row" data-name="peach iced tea"> <span class="item-name">Peach Iced Tea</span> <span class="item-price">₹100</span> </div>
+            <div class="item-row" data-name="strawberry iced tea"> <span class="item-name">Strawberry Iced Tea</span> <span class="item-price">₹110</span> </div>
+            <div class="item-row" data-name="green apple iced tea"> <span class="item-name">Green Apple Iced Tea</span> <span class="item-price">₹110</span> </div>
+        </div>
+
+        <!-- Brain Freezers -->
+        <div class="section" id="brain">
+            <h2 class="category-title">🧊 Brain Freezers</h2>
+            <div class="item-row" data-name="blue blast"> <span class="item-name">Blue Blast</span> <span class="item-price">₹120</span> </div>
+            <div class="item-row" data-name="icy lush"> <span class="item-name">Icy Lush</span> <span class="item-price">₹130</span> </div>
+            <div class="item-row" data-name="berry blast"> <span class="item-name">Berry Blast</span> <span class="item-price">₹140</span> </div>
+        </div>
+
+        <!-- Extras -->
+        <div class="section" id="extras">
+            <h2 class="category-title">➕ Extras</h2>
+            <div class="item-row" data-name="extra shot"> <span class="item-name">Extra Shot</span> <span class="item-price">₹40</span> </div>
+            <div class="item-row" data-name="ice cream scoop"> <span class="item-name">Ice Cream Scoop</span> <span class="item-price">₹50</span> </div>
+            <div class="item-row" data-name="whipped cream"> <span class="item-name">Whipped Cream</span> <span class="item-price">₹40</span> </div>
         </div>
 
     </div>
 
     <!-- WHATSAPP CTA -->
-    <a href="https://wa.me/919999999999?text=Hi NBC! I'd like to place an order." class="wa-btn" target="_blank">
+    <a href="https://wa.me/919999999999?text=Hi NBC! I'd like to order." class="whatsapp-fixed" target="_blank">
         <i data-lucide="message-circle" size="20"></i>
         Order on WhatsApp
     </a>
@@ -344,68 +342,66 @@
 </div>
 
 <script>
-    // Initialize Lucide Icons
+    // Load Icons
     lucide.createIcons();
 
-    // Theme Toggle Function
+    // Theme Switcher
     function toggleTheme() {
         const body = document.body;
-        const themeIcon = document.getElementById('themeIcon');
+        const icon = document.getElementById('icon');
         const isDark = body.getAttribute('data-theme') === 'dark';
-        
         if (isDark) {
             body.removeAttribute('data-theme');
-            themeIcon.setAttribute('data-lucide', 'moon');
+            icon.setAttribute('data-lucide', 'moon');
         } else {
             body.setAttribute('data-theme', 'dark');
-            themeIcon.setAttribute('data-lucide', 'sun');
+            icon.setAttribute('data-lucide', 'sun');
         }
-        lucide.createIcons(); // Re-render icons
+        lucide.createIcons();
     }
 
-    // Real-time Search Filter
+    // Live Search Filter
     const searchInput = document.getElementById('searchInput');
-    const menuItems = document.querySelectorAll('.menu-item');
-    const menuGroups = document.querySelectorAll('.menu-group');
-    const emptyState = document.getElementById('emptyState');
+    const itemRows = document.querySelectorAll('.item-row');
+    const sections = document.querySelectorAll('.section');
+    const noResult = document.getElementById('noResult');
 
     searchInput.addEventListener('input', (e) => {
-        const value = e.target.value.toLowerCase();
-        let visibleCount = 0;
+        const val = e.target.value.toLowerCase();
+        let totalVisible = 0;
 
-        menuItems.forEach(item => {
-            const name = item.getAttribute('data-name').toLowerCase();
-            if (name.includes(value)) {
-                item.style.display = 'flex';
-                visibleCount++;
+        itemRows.forEach(row => {
+            const name = row.getAttribute('data-name');
+            if (name.includes(val)) {
+                row.style.display = 'flex';
+                totalVisible++;
             } else {
-                item.style.display = 'none';
+                row.style.display = 'none';
             }
         });
 
-        // Hide headers if no items in group
-        menuGroups.forEach(group => {
-            const hasVisible = group.querySelectorAll('.menu-item[style="display: flex;"]').length > 0;
-            group.style.display = hasVisible ? 'block' : 'none';
+        // Hide empty sections
+        sections.forEach(sec => {
+            const hasMatches = sec.querySelectorAll('.item-row[style="display: flex;"]').length > 0;
+            sec.style.display = (hasMatches || val === "") ? 'block' : 'none';
         });
 
-        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        noResult.style.display = (totalVisible === 0 && val !== "") ? 'block' : 'none';
     });
 
-    // Category Chip Active State on Scroll
+    // Auto-Highlight Active Category on Scroll
     window.addEventListener('scroll', () => {
-        let current = "";
-        menuGroups.forEach((group) => {
-            const sectionTop = group.offsetTop;
-            const sectionHeight = group.clientHeight;
-            if (pageYOffset >= sectionTop - 200) {
-                current = group.getAttribute("id");
+        let currentSection = "";
+        sections.forEach(sec => {
+            const top = sec.offsetTop;
+            if (pageYOffset >= top - 250) {
+                currentSection = sec.getAttribute("id");
             }
         });
 
-        document.querySelectorAll(".cat-chip").forEach((chip) => {
+        document.querySelectorAll(".chip").forEach(chip => {
             chip.classList.remove("active");
-            if (chip.getAttribute("href") === `#${current}`) {
+            if (chip.getAttribute("href") === `#${currentSection}`) {
                 chip.classList.add("active");
             }
         });
