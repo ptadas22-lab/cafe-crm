@@ -2,269 +2,275 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nothing Before Coffee | Digital Menu</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NBC | Digital Menu</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Light Mode Colors (NBC Aesthetic) */
-            --bg-color: #FAF9F6;
-            --card-bg: #ffffff;
-            --text-main: #3C2A21;
-            --text-muted: #6D5D55;
+            --bg: #FAF9F6;
+            --card: #ffffff;
+            --text: #3C2A21;
+            --muted: #7D6E66;
             --accent: #D5CEA3;
-            --primary-brown: #3C2A21;
-            --whatsapp-green: #25D366;
-            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --nbc-brown: #3C2A21;
+            --wa-green: #25D366;
+            --header-height: 130px;
         }
 
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --card-bg: #1E1E1E;
-            --text-main: #E5E5CB;
-            --text-muted: #A0938E;
+            --bg: #1A1A1A;
+            --card: #262626;
+            --text: #F5F5F5;
+            --muted: #A0A0A0;
             --accent: #D5CEA3;
-            --primary-brown: #D5CEA3;
-            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --nbc-brown: #D5CEA3;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 80px;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden; /* Prevents side scrolling */
+            width: 100%;
         }
 
-        /* Header & Search */
-        header {
-            padding: 2rem 1.5rem;
-            text-align: center;
-            position: sticky;
+        /* Fixed Top Header */
+        .sticky-top {
+            position: fixed;
             top: 0;
-            background: var(--bg-color);
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            z-index: 1000;
+            padding: 10px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .brand-logo {
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--primary-brown);
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--nbc-brown);
         }
 
-        .controls {
+        .search-row {
             display: flex;
             gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
+            align-items: center;
         }
 
-        .search-container {
+        .search-box {
             position: relative;
-            flex-grow: 1;
+            flex: 1;
         }
 
-        .search-container i {
+        .search-box i {
             position: absolute;
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-muted);
+            color: var(--muted);
         }
 
         #searchBar {
             width: 100%;
-            padding: 12px 12px 12px 40px;
-            border-radius: 25px;
+            padding: 10px 10px 10px 35px;
+            border-radius: 12px;
             border: 1px solid var(--accent);
-            background: var(--card-bg);
-            color: var(--text-main);
+            background: var(--card);
+            color: var(--text);
+            font-size: 14px;
             outline: none;
         }
 
-        .theme-toggle {
-            background: var(--card-bg);
+        .theme-btn {
+            background: var(--card);
             border: 1px solid var(--accent);
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            color: var(--text);
+            cursor: pointer;
         }
 
-        /* Categories Navigation */
-        .categories-nav {
+        /* Horizontal Category Bar */
+        .cat-bar {
             display: flex;
             overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px 1.5rem;
-            gap: 15px;
+            gap: 10px;
+            padding: 5px 0 10px 0;
             scrollbar-width: none;
-            position: sticky;
-            top: 140px;
-            background: var(--bg-color);
-            z-index: 90;
         }
+        .cat-bar::-webkit-scrollbar { display: none; }
 
-        .categories-nav::-webkit-scrollbar { display: none; }
-
-        .cat-link {
-            padding: 8px 20px;
-            border-radius: 20px;
-            background: var(--card-bg);
+        .cat-chip {
+            padding: 6px 16px;
+            background: var(--card);
             border: 1px solid var(--accent);
+            border-radius: 20px;
+            white-space: nowrap;
             text-decoration: none;
-            color: var(--text-main);
-            font-size: 0.9rem;
+            color: var(--text);
+            font-size: 13px;
             font-weight: 600;
         }
 
-        .cat-link.active {
-            background: var(--primary-brown);
-            color: var(--bg-color);
-        }
-
-        /* Menu Content */
-        .menu-container {
-            padding: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto;
+        /* Menu Container */
+        .container {
+            margin-top: var(--header-height);
+            padding: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: var(--nbc-brown);
+            scroll-margin-top: 150px; /* Fixes overlap when clicking category */
         }
 
-        .item-card {
-            background: var(--card-bg);
+        .menu-item {
+            background: var(--card);
+            border-radius: 15px;
             padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .item-info h3 {
-            font-size: 1.05rem;
+        .item-detail h3 {
+            font-size: 1rem;
             margin-bottom: 4px;
         }
 
-        .item-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .item-detail p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            max-width: 180px;
         }
 
         .item-price {
             font-weight: 700;
-            color: var(--primary-brown);
             font-size: 1.1rem;
+            color: var(--nbc-brown);
         }
 
-        /* WhatsApp Button */
-        .whatsapp-float {
+        /* Floating Order Button */
+        .wa-order {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            background: var(--whatsapp-green);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--wa-green);
             color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: 30px;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-weight: 600;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 1001;
+            width: fit-content;
+            white-space: nowrap;
         }
 
-        /* Mobile View Fixes */
-        @media (max-width: 480px) {
-            header { padding: 1.5rem 1rem; }
-            .brand-logo { font-size: 1.5rem; }
+        /* Empty State */
+        #noResults {
+            text-align: center;
+            padding: 40px;
+            display: none;
+            color: var(--muted);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-logo">Nothing Before Coffee</div>
-        <div class="controls">
-            <div class="search-container">
-                <i data-lucide="search" size="18"></i>
-                <input type="text" id="searchBar" placeholder="Search for your favorite brew...">
-            </div>
-            <button class="theme-toggle" onclick="toggleTheme()">
+    <div class="sticky-top">
+        <div class="header-main">
+            <div class="logo">Nothing Before Coffee</div>
+            <button class="theme-btn" onclick="toggleTheme()">
                 <i data-lucide="moon" id="themeIcon"></i>
             </button>
         </div>
-    </header>
-
-    <nav class="categories-nav">
-        <a href="#hot-coffee" class="cat-link active">Hot Coffee</a>
-        <a href="#cold-coffee" class="cat-link">Cold Coffee</a>
-        <a href="#mocktails" class="cat-link">Mocktails</a>
-        <a href="#shakes" class="cat-link">Shakes</a>
-    </nav>
-
-    <div class="menu-container" id="menuContent">
-        <!-- Hot Coffee -->
-        <div class="menu-section" id="hot-coffee">
-            <h2 class="section-title">Hot Coffee</h2>
-            <div class="item-card" data-name="espresso">
-                <div class="item-info">
-                    <h3>Classic Espresso</h3>
-                    <p>Rich, bold, and pure caffeine shot.</p>
-                </div>
-                <div class="item-price">₹99</div>
+        
+        <div class="search-row">
+            <div class="search-box">
+                <i data-lucide="search" size="16"></i>
+                <input type="text" id="searchBar" placeholder="Search menu...">
             </div>
-            <div class="item-card" data-name="cappuccino">
-                <div class="item-info">
+        </div>
+
+        <div class="cat-bar">
+            <a href="#hot" class="cat-chip">Hot Coffee</a>
+            <a href="#cold" class="cat-chip">Cold Coffee</a>
+            <a href="#mocktails" class="cat-chip">Mocktails</a>
+            <a href="#shakes" class="cat-chip">Shakes</a>
+        </div>
+    </div>
+
+    <div class="container" id="menu">
+        <div id="noResults">No items found...</div>
+
+        <!-- Hot Coffee -->
+        <div class="menu-section" id="hot">
+            <h2 class="section-title">Hot Coffee</h2>
+            <div class="menu-item" data-name="cappuccino">
+                <div class="item-detail">
                     <h3>Cappuccino</h3>
-                    <p>Double shot with steamed milk & thick foam.</p>
+                    <p>Espresso with steamed milk and thick foam layer.</p>
                 </div>
                 <div class="item-price">₹149</div>
+            </div>
+            <div class="menu-item" data-name="americano">
+                <div class="item-detail">
+                    <h3>Americano</h3>
+                    <p>Rich espresso shots topped with hot water.</p>
+                </div>
+                <div class="item-price">₹129</div>
             </div>
         </div>
 
         <!-- Cold Coffee -->
-        <div class="menu-section" id="cold-coffee">
+        <div class="menu-section" id="cold">
             <h2 class="section-title">Cold Coffee</h2>
-            <div class="item-card" data-name="frappe">
-                <div class="item-info">
+            <div class="menu-item" data-name="frappe">
+                <div class="item-detail">
                     <h3>Signature Frappe</h3>
-                    <p>Blended cold coffee topped with cream.</p>
+                    <p>Ice-blended coffee topped with whipped cream.</p>
                 </div>
                 <div class="item-price">₹199</div>
             </div>
-            <div class="item-card" data-name="iced latte">
-                <div class="item-info">
+            <div class="menu-item" data-name="hazelnut latte">
+                <div class="item-detail">
                     <h3>Iced Hazelnut Latte</h3>
-                    <p>Chilled milk and espresso with hazelnut notes.</p>
+                    <p>Chilled milk and coffee with nutty hazelnut.</p>
                 </div>
                 <div class="item-price">₹219</div>
             </div>
@@ -273,10 +279,10 @@
         <!-- Mocktails -->
         <div class="menu-section" id="mocktails">
             <h2 class="section-title">Mocktails</h2>
-            <div class="item-card" data-name="virgin mojito">
-                <div class="item-info">
+            <div class="menu-item" data-name="mojito">
+                <div class="item-detail">
                     <h3>Virgin Mojito</h3>
-                    <p>Fresh mint, lime, and sparkling soda.</p>
+                    <p>Fresh mint, lemon, and bubbly soda.</p>
                 </div>
                 <div class="item-price">₹129</div>
             </div>
@@ -285,32 +291,32 @@
         <!-- Shakes -->
         <div class="menu-section" id="shakes">
             <h2 class="section-title">Shakes</h2>
-            <div class="item-card" data-name="belgian chocolate shake">
-                <div class="item-info">
-                    <h3>Belgian Chocolate Shake</h3>
-                    <p>Dense, dark chocolate blended to perfection.</p>
+            <div class="menu-item" data-name="chocolate shake">
+                <div class="item-detail">
+                    <h3>Belgian Chocolate</h3>
+                    <p>Pure Belgian chocolate blended thick.</p>
                 </div>
-                <div class="item-price">₹229</div>
+                <div class="item-price">₹239</div>
             </div>
         </div>
     </div>
 
-    <!-- WhatsApp Order Button -->
-    <!-- Replace 919999999999 with actual shop phone number -->
-    <a href="https://wa.me/919999999999?text=Hi! I want to place an order from Nothing Before Coffee." class="whatsapp-float" target="_blank">
-        <i data-lucide="message-circle"></i>
+    <a href="https://wa.me/919999999999?text=I'd like to order from NBC!" class="wa-order">
+        <i data-lucide="message-circle" size="20"></i>
         Order on WhatsApp
     </a>
 
     <script>
-        // Initialize Icons
+        // Init Icons
         lucide.createIcons();
 
-        // Theme Toggle
+        // Dark Mode Logic
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
-            if (body.getAttribute('data-theme') === 'dark') {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            
+            if (isDark) {
                 body.removeAttribute('data-theme');
                 icon.setAttribute('data-lucide', 'moon');
             } else {
@@ -320,34 +326,52 @@
             lucide.createIcons();
         }
 
-        // Search Functionality
+        // Real-time Search Logic
         const searchBar = document.getElementById('searchBar');
-        searchBar.addEventListener('keyup', (e) => {
-            const term = e.target.value.toLowerCase();
-            const items = document.querySelectorAll('.item-card');
-            
+        const items = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.menu-section');
+        const noResults = document.getElementById('noResults');
+
+        searchBar.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            let hasVisibleItems = false;
+
             items.forEach(item => {
-                const name = item.getAttribute('data-name');
-                if (name.includes(term)) {
+                const name = item.getAttribute('data-name').toLowerCase();
+                if (name.includes(query)) {
                     item.style.display = 'flex';
+                    hasVisibleItems = true;
                 } else {
                     item.style.display = 'none';
                 }
             });
 
-            // Hide empty sections
-            document.querySelectorAll('.menu-section').forEach(section => {
-                const visibleItems = section.querySelectorAll('.item-card[style="display: flex;"]');
-                section.style.display = visibleItems.length === 0 && term !== "" ? 'none' : 'block';
+            // Hide sections with no matches
+            sections.forEach(section => {
+                const visibleInSec = section.querySelectorAll('.menu-item[style="display: flex;"]');
+                section.style.display = visibleInSec.length > 0 ? 'block' : 'none';
             });
+
+            noResults.style.display = hasVisibleItems ? 'none' : 'block';
         });
 
-        // Category Navigation Active State
-        const links = document.querySelectorAll('.cat-link');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+        // Highlight category chip on scroll
+        window.addEventListener('scroll', () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            document.querySelectorAll(".cat-chip").forEach((chip) => {
+                chip.style.background = "var(--card)";
+                chip.style.color = "var(--text)";
+                if (chip.getAttribute("href") === `#${current}`) {
+                    chip.style.background = "var(--nbc-brown)";
+                    chip.style.color = "white";
+                }
             });
         });
     </script>
