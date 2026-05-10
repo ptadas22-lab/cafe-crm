@@ -17,9 +17,8 @@
             --primary: #3C2A21; /* NBC Brown */
             --accent: #D5CEA3; /* NBC Gold */
             --text: #1A1A1A;
-            --muted: #6D5D55;
+            --muted: #74645C;
             --wa: #25D366;
-            --header-offset: 200px; /* Crucial for visibility */
         }
 
         [data-theme="dark"] {
@@ -30,113 +29,113 @@
             --muted: #A0938E;
         }
 
+        /* The Scroll Fix */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 210px; /* This prevents header from covering titles */
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
-            width: 100%;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Fixed Top Section */
-        header {
+        /* Header - Fixed but with safe space */
+        .fixed-header {
             position: fixed;
             top: 0;
             width: 100%;
             max-width: 500px;
-            left: 50%;
-            transform: translateX(-50%);
             background: var(--bg);
             z-index: 2000;
             padding: 15px 20px 10px;
             border-bottom: 2px solid var(--accent);
         }
 
-        .logo-row {
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            color: var(--primary);
-        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--primary); }
 
-        .search-container {
+        .search-box {
             position: relative;
             margin-bottom: 12px;
         }
 
-        .search-container i {
-            position: absolute; left: 10px; top: 50%;
+        .search-box i {
+            position: absolute; left: 12px; top: 50%;
             transform: translateY(-50%); color: var(--muted);
         }
 
         #search {
-            width: 100%; padding: 10px 35px; border-radius: 10px;
+            width: 100%; padding: 12px 40px; border-radius: 12px;
             border: 1px solid var(--accent); background: var(--surface);
             color: var(--text); font-size: 16px; outline: none;
         }
 
-        /* Horizontal Scroll Chips */
-        .cat-nav {
-            display: flex; overflow-x: auto; gap: 8px; padding-bottom: 8px;
+        /* Chips Navigation */
+        .chip-nav {
+            display: flex; overflow-x: auto; gap: 8px; padding-bottom: 5px;
             scrollbar-width: none;
         }
-        .cat-nav::-webkit-scrollbar { display: none; }
+        .chip-nav::-webkit-scrollbar { display: none; }
 
         .chip {
-            padding: 7px 14px; background: var(--surface); border: 1px solid var(--accent);
+            padding: 8px 16px; background: var(--surface); border: 1px solid var(--accent);
             border-radius: 20px; white-space: nowrap; font-size: 12px;
             font-weight: 700; text-decoration: none; color: var(--text);
         }
 
         .chip.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
 
-        /* Main Content Container */
-        .menu-wrapper {
-            margin-top: var(--header-offset);
-            padding: 0 20px 100px;
+        /* CONTENT AREA - Massive top margin to ensure first items show */
+        .content {
+            width: 100%;
             max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 210px 20px 120px; /* 210px ensures items start after header */
         }
 
-        .section { margin-bottom: 35px; scroll-margin-top: 220px; }
+        .section { margin-bottom: 40px; }
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary);
             margin-bottom: 15px;
             border-bottom: 2px solid var(--accent);
             display: inline-block;
         }
 
-        /* Item Row Styling - Perfect Alignment */
-        .item-row {
+        /* List Rows - Flexbox ensures nothing is cut off */
+        .row {
             background: var(--surface);
-            padding: 15px;
+            padding: 16px;
             margin-bottom: 10px;
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .name { font-weight: 600; font-size: 14px; flex: 1; padding-right: 10px; }
-        .price { font-weight: 700; color: var(--primary); font-size: 15px; white-space: nowrap; }
+        .price { font-weight: 700; color: var(--primary); font-size: 15px; }
 
-        /* WhatsApp Button */
-        .wa-btn {
+        /* Floating Order Button */
+        .wa-float {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 400px; background: var(--wa);
+            width: 90%; max-width: 450px; background: var(--wa);
             color: white; text-align: center; padding: 16px; border-radius: 15px;
             text-decoration: none; font-weight: 700; z-index: 3000;
             display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -144,152 +143,152 @@
         }
 
         .theme-btn { background: none; border: none; cursor: pointer; color: var(--text); }
-        #noMatch { display: none; text-align: center; padding: 40px; color: var(--muted); }
+        #noMatch { display: none; text-align: center; padding: 50px; color: var(--muted); }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-row">
+    <div class="fixed-header">
+        <div class="header-top">
             <div class="logo">Nothing Before Coffee</div>
             <button class="theme-btn" onclick="toggleTheme()"><i data-lucide="moon" id="t-icon"></i></button>
         </div>
-        <div class="search-container">
+        <div class="search-box">
             <i data-lucide="search" size="18"></i>
-            <input type="text" id="search" placeholder="Search drinks..." onkeyup="searchFn()">
+            <input type="text" id="search" placeholder="Search drinks..." onkeyup="filter()">
         </div>
-        <div class="cat-nav">
+        <div class="chip-nav">
             <a href="#hot" class="chip active">Hot Coffee</a>
-            <a href="#milk" class="chip">Hot Coffee w/ Milk</a>
+            <a href="#milk" class="chip">With Milk</a>
             <a href="#icy" class="chip">Icy Coffee</a>
-            <a href="#choco" class="chip">Hot Choco</a>
-            <a href="#tea" class="chip">Hot Tea</a>
-            <a href="#cold-shakes" class="chip">Cold Coffee & Shakes</a>
-            <a href="#frappe" class="chip">Signature Frappe</a>
+            <a href="#choco" class="chip">Choco</a>
+            <a href="#tea" class="chip">Tea</a>
+            <a href="#shakes-cold" class="chip">Cold Coffee & Shakes</a>
+            <a href="#frappe" class="chip">Frappe</a>
             <a href="#iced-tea" class="chip">Iced Tea</a>
             <a href="#shakes" class="chip">Shakes</a>
             <a href="#drum" class="chip">Drum Freezers</a>
             <a href="#extras" class="chip">Extras</a>
         </div>
-    </header>
+    </div>
 
-    <div class="menu-wrapper">
-        <div id="noMatch">No drinks found matching your search.</div>
+    <div class="content">
+        <div id="noMatch">Item not found in menu.</div>
 
         <!-- HOT COFFEE -->
         <div class="section" id="hot">
             <h2 class="section-title">☕ HOT COFFEE</h2>
-            <div class="item-row" data-n="espresso"> <span class="name">Espresso</span> <span class="price">₹99</span> </div>
-            <div class="item-row" data-n="dark latte"> <span class="name">Dark Latte</span> <span class="price">₹129</span> </div>
-            <div class="item-row" data-n="cafe mocha"> <span class="name">Café Mocha</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="caramel cappuccino latte"> <span class="name">Caramel Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="hazelnut cappuccino latte"> <span class="name">Hazelnut Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="tiramisu cappuccino latte"> <span class="name">Tiramisu Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="vanilla cappuccino latte"> <span class="name">Vanilla Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="irish cappuccino latte"> <span class="name">Irish Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="vanilla cappuccino"> <span class="name">Vanilla Cappuccino</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="irish biscuit cappuccino latte"> <span class="name">Irish Biscuit Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="espresso"> <span class="name">Espresso</span> <span class="price">₹99</span> </div>
+            <div class="row" data-n="dark latte"> <span class="name">Dark Latte</span> <span class="price">₹129</span> </div>
+            <div class="row" data-n="cafe mocha"> <span class="name">Café Mocha</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="caramel cappuccino latte"> <span class="name">Caramel Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="hazelnut cappuccino latte"> <span class="name">Hazelnut Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="tiramisu cappuccino latte"> <span class="name">Tiramisu Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="vanilla cappuccino latte"> <span class="name">Vanilla Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="irish cappuccino latte"> <span class="name">Irish Cappuccino Latte</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="vanilla cappuccino"> <span class="name">Vanilla Cappuccino</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="irish biscuit cappuccino latte"> <span class="name">Irish Biscuit Cappuccino Latte</span> <span class="price">₹159</span> </div>
         </div>
 
         <!-- HOT COFFEE WITH MILK -->
         <div class="section" id="milk">
-            <h2 class="section-title">🥛 HOT COFFEE WITH MILK</h2>
-            <div class="item-row" data-n="espresso (coffee shot story)"> <span class="name">Espresso (coffee shot story)</span> <span class="price">₹70</span> </div>
-            <div class="item-row" data-n="americano"> <span class="name">Americano</span> <span class="price">₹85</span> </div>
-            <div class="item-row" data-n="flat city"> <span class="name">Flat City</span> <span class="price">₹95</span> </div>
-            <div class="item-row" data-n="icy coffee"> <span class="name">Icy Coffee</span> <span class="price">₹100</span> </div>
+            <h2 class="section-title">🥛 WITH MILK</h2>
+            <div class="row" data-n="espresso (coffee shot story)"> <span class="name">Espresso (coffee shot story)</span> <span class="price">₹70</span> </div>
+            <div class="row" data-n="americano"> <span class="name">Americano</span> <span class="price">₹85</span> </div>
+            <div class="row" data-n="flat city"> <span class="name">Flat City</span> <span class="price">₹95</span> </div>
+            <div class="row" data-n="icy coffee"> <span class="name">Icy Coffee</span> <span class="price">₹100</span> </div>
         </div>
 
         <!-- ICY COFFEE -->
         <div class="section" id="icy">
             <h2 class="section-title">🧊 ICY COFFEE</h2>
-            <div class="item-row" data-n="iced coffee"> <span class="name">Iced Coffee</span> <span class="price">₹109</span> </div>
-            <div class="item-row" data-n="iced latte"> <span class="name">Iced Latte</span> <span class="price">₹119</span> </div>
-            <div class="item-row" data-n="iced americano"> <span class="name">Iced Americano</span> <span class="price">₹109</span> </div>
-            <div class="item-row" data-n="iced latte pie"> <span class="name">Iced Latte Pie</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="iced mocha"> <span class="name">Iced Mocha</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="iced caramel"> <span class="name">Iced Caramel</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="cold brew"> <span class="name">Cold Brew</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="espresso-on ice cappuccino"> <span class="name">Espresso-on Ice Cappuccino</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="iced coffee"> <span class="name">Iced Coffee</span> <span class="price">₹109</span> </div>
+            <div class="row" data-n="iced latte"> <span class="name">Iced Latte</span> <span class="price">₹119</span> </div>
+            <div class="row" data-n="iced americano"> <span class="name">Iced Americano</span> <span class="price">₹109</span> </div>
+            <div class="row" data-n="iced latte pie"> <span class="name">Iced Latte Pie</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="iced mocha"> <span class="name">Iced Mocha</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="iced caramel"> <span class="name">Iced Caramel</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="cold brew"> <span class="name">Cold Brew</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="espresso-on ice cappuccino"> <span class="name">Espresso-on Ice Cappuccino</span> <span class="price">₹149</span> </div>
         </div>
 
         <!-- HOT CHOCO -->
         <div class="section" id="choco">
             <h2 class="section-title">🍫 HOT CHOCO</h2>
-            <div class="item-row" data-n="hot chocolate"> <span class="name">Hot Chocolate</span> <span class="price">₹115</span> </div>
-            <div class="item-row" data-n="hot nutella"> <span class="name">Hot Nutella</span> <span class="price">₹125</span> </div>
-            <div class="item-row" data-n="hot mocha"> <span class="name">Hot Mocha</span> <span class="price">₹125</span> </div>
+            <div class="row" data-n="hot chocolate"> <span class="name">Hot Chocolate</span> <span class="price">₹115</span> </div>
+            <div class="row" data-n="hot nutella"> <span class="name">Hot Nutella</span> <span class="price">₹125</span> </div>
+            <div class="row" data-n="hot mocha"> <span class="name">Hot Mocha</span> <span class="price">₹125</span> </div>
         </div>
 
         <!-- HOT TEA -->
         <div class="section" id="tea">
             <h2 class="section-title">🍃 HOT TEA</h2>
-            <div class="item-row" data-n="lemon tea"> <span class="name">Lemon Tea</span> <span class="price">₹93</span> </div>
-            <div class="item-row" data-n="green tea"> <span class="name">Green Tea</span> <span class="price">₹93</span> </div>
-            <div class="item-row" data-n="assam tea"> <span class="name">Assam Tea</span> <span class="price">₹80</span> </div>
+            <div class="row" data-n="lemon tea"> <span class="name">Lemon Tea</span> <span class="price">₹93</span> </div>
+            <div class="row" data-n="green tea"> <span class="name">Green Tea</span> <span class="price">₹93</span> </div>
+            <div class="row" data-n="assam tea"> <span class="name">Assam Tea</span> <span class="price">₹80</span> </div>
         </div>
 
         <!-- COLD COFFEE & SHAKES -->
-        <div class="section" id="cold-shakes">
+        <div class="section" id="shakes-cold">
             <h2 class="section-title">❄️ COLD COFFEE & SHAKES</h2>
-            <div class="item-row" data-n="original shakes"> <span class="name">Original Shakes</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="black sunset mojito"> <span class="name">Black Sunset Mojito</span> <span class="price">₹175</span> </div>
-            <div class="item-row" data-n="strawberry mojito"> <span class="name">Strawberry Mojito</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="guava shakes"> <span class="name">Guava Shakes</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="shake oranges"> <span class="name">Shake Oranges</span> <span class="price">₹159</span> </div>
-            <div class="item-row" data-n="hazelnut pineapple"> <span class="name">Hazelnut Pineapple</span> <span class="price">₹170</span> </div>
-            <div class="item-row" data-n="kiwi shakes"> <span class="name">Kiwi Shakes</span> <span class="price">₹170</span> </div>
-            <div class="item-row" data-n="double choco chip oreo shake"> <span class="name">Double Choco Chip Oreo Shake</span> <span class="price">₹191</span> </div>
-            <div class="item-row" data-n="mocha pineapple"> <span class="name">Mocha Pineapple</span> <span class="price">₹233</span> </div>
-            <div class="item-row" data-n="nutella shakes"> <span class="name">Nutella Shakes</span> <span class="price">₹239</span> </div>
-            <div class="item-row" data-n="guava shakes premium"> <span class="name">Guava Shakes (Premium)</span> <span class="price">₹219</span> </div>
-            <div class="item-row" data-n="irish biscuit pineapple"> <span class="name">Irish Biscuit Pineapple</span> <span class="price">₹240</span> </div>
-            <div class="item-row" data-n="brownie shakes"> <span class="name">Brownie Shakes</span> <span class="price">₹240</span> </div>
+            <div class="row" data-n="original shakes"> <span class="name">Original Shakes</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="black sunset mojito"> <span class="name">Black Sunset Mojito</span> <span class="price">₹175</span> </div>
+            <div class="row" data-n="strawberry mojito"> <span class="name">Strawberry Mojito</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="guava shakes"> <span class="name">Guava Shakes</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="shake oranges"> <span class="name">Shake Oranges</span> <span class="price">₹159</span> </div>
+            <div class="row" data-n="hazelnut pineapple"> <span class="name">Hazelnut Pineapple</span> <span class="price">₹170</span> </div>
+            <div class="row" data-n="kiwi shakes"> <span class="name">Kiwi Shakes</span> <span class="price">₹170</span> </div>
+            <div class="row" data-n="double choco chip oreo shake"> <span class="name">Double Choco Chip Oreo Shake</span> <span class="price">₹191</span> </div>
+            <div class="row" data-n="mocha pineapple"> <span class="name">Mocha Pineapple</span> <span class="price">₹233</span> </div>
+            <div class="row" data-n="nutella shakes"> <span class="name">Nutella Shakes</span> <span class="price">₹239</span> </div>
+            <div class="row" data-n="guava premium shakes"> <span class="name">Guava Shakes (Premium)</span> <span class="price">₹219</span> </div>
+            <div class="row" data-n="irish biscuit pineapple"> <span class="name">Irish Biscuit Pineapple</span> <span class="price">₹240</span> </div>
+            <div class="row" data-n="brownie shakes"> <span class="name">Brownie Shakes</span> <span class="price">₹240</span> </div>
         </div>
 
         <!-- SIGNATURE FRAPPE -->
         <div class="section" id="frappe">
             <h2 class="section-title">✨ SIGNATURE FRAPPE</h2>
-            <div class="item-row" data-n="classic frappe"> <span class="name">Classic Frappe</span> <span class="price">₹170</span> </div>
-            <div class="item-row" data-n="premium roasted frappe"> <span class="name">Premium Roasted Frappe</span> <span class="price">₹249</span> </div>
+            <div class="row" data-n="classic frappe"> <span class="name">Classic Frappe</span> <span class="price">₹170</span> </div>
+            <div class="row" data-n="premium roasted frappe"> <span class="name">Premium Roasted Frappe</span> <span class="price">₹249</span> </div>
         </div>
 
         <!-- ICED TEA -->
         <div class="section" id="iced-tea">
             <h2 class="section-title">🍹 ICED TEA</h2>
-            <div class="item-row" data-n="lemon iced tea"> <span class="name">Lemon Iced Tea</span> <span class="price">₹110</span> </div>
-            <div class="item-row" data-n="peach iced tea"> <span class="name">Peach Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="item-row" data-n="strawberry iced tea"> <span class="name">Strawberry Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="item-row" data-n="cranberry iced tea"> <span class="name">Cranberry Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="item-row" data-n="watermelon iced tea"> <span class="name">Watermelon Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="item-row" data-n="redbull iced tea"> <span class="name">Redbull Iced Tea</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="lemon iced tea"> <span class="name">Lemon Iced Tea</span> <span class="price">₹110</span> </div>
+            <div class="row" data-n="peach iced tea"> <span class="name">Peach Iced Tea</span> <span class="price">₹119</span> </div>
+            <div class="row" data-n="strawberry iced tea"> <span class="name">Strawberry Iced Tea</span> <span class="price">₹119</span> </div>
+            <div class="row" data-n="cranberry iced tea"> <span class="name">Cranberry Iced Tea</span> <span class="price">₹119</span> </div>
+            <div class="row" data-n="watermelon iced tea"> <span class="name">Watermelon Iced Tea</span> <span class="price">₹119</span> </div>
+            <div class="row" data-n="redbull iced tea"> <span class="name">Redbull Iced Tea</span> <span class="price">₹149</span> </div>
         </div>
 
         <!-- SHAKES -->
         <div class="section" id="shakes">
             <h2 class="section-title">🥤 SHAKES</h2>
-            <div class="item-row" data-n="chocolate shake"> <span class="name">Chocolate Shake</span> <span class="price">₹96</span> </div>
-            <div class="item-row" data-n="blackcurrant shake"> <span class="name">Blackcurrant Shake</span> <span class="price">₹110</span> </div>
-            <div class="item-row" data-n="strawberry shake"> <span class="name">Strawberry Shake</span> <span class="price">₹110</span> </div>
-            <div class="item-row" data-n="oreo shake"> <span class="name">Oreo Shake</span> <span class="price">₹115</span> </div>
-            <div class="item-row" data-n="rose shake"> <span class="name">Rose Shake</span> <span class="price">₹115</span> </div>
-            <div class="item-row" data-n="kitkat shake"> <span class="name">Kitkat Shake</span> <span class="price">₹125</span> </div>
-            <div class="item-row" data-n="nutella shake"> <span class="name">Nutella Shake</span> <span class="price">₹125</span> </div>
-            <div class="item-row" data-n="snickers shake"> <span class="name">Snickers Shake</span> <span class="price">₹130</span> </div>
-            <div class="item-row" data-n="belgian chocolate shake"> <span class="name">Belgian Chocolate Shake</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="hazelnut shake"> <span class="name">Hazelnut Shake</span> <span class="price">₹149</span> </div>
-            <div class="item-row" data-n="brownie shake"> <span class="name">Brownie Shake</span> <span class="price">₹155</span> </div>
-            <div class="item-row" data-n="blueberry shake"> <span class="name">Blueberry Shake</span> <span class="price">₹160</span> </div>
-            <div class="item-row" data-n="lotus biscoff shake"> <span class="name">Lotus Biscoff Shake</span> <span class="price">₹175</span> </div>
-            <div class="item-row" data-n="rocher shake"> <span class="name">Rocher Shake</span> <span class="price">₹175</span> </div>
+            <div class="row" data-n="chocolate shake"> <span class="name">Chocolate Shake</span> <span class="price">₹96</span> </div>
+            <div class="row" data-n="blackcurrant shake"> <span class="name">Blackcurrant Shake</span> <span class="price">₹110</span> </div>
+            <div class="row" data-n="strawberry shake"> <span class="name">Strawberry Shake</span> <span class="price">₹110</span> </div>
+            <div class="row" data-n="oreo shake"> <span class="name">Oreo Shake</span> <span class="price">₹115</span> </div>
+            <div class="row" data-n="rose shake"> <span class="name">Rose Shake</span> <span class="price">₹115</span> </div>
+            <div class="row" data-n="kitkat shake"> <span class="name">Kitkat Shake</span> <span class="price">₹125</span> </div>
+            <div class="row" data-n="nutella shake"> <span class="name">Nutella Shake</span> <span class="price">₹125</span> </div>
+            <div class="row" data-n="snickers shake"> <span class="name">Snickers Shake</span> <span class="price">₹130</span> </div>
+            <div class="row" data-n="belgian chocolate shake"> <span class="name">Belgian Chocolate Shake</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="hazelnut shake"> <span class="name">Hazelnut Shake</span> <span class="price">₹149</span> </div>
+            <div class="row" data-n="brownie shake"> <span class="name">Brownie Shake</span> <span class="price">₹155</span> </div>
+            <div class="row" data-n="blueberry shake"> <span class="name">Blueberry Shake</span> <span class="price">₹160</span> </div>
+            <div class="row" data-n="lotus biscoff shake"> <span class="name">Lotus Biscoff Shake</span> <span class="price">₹175</span> </div>
+            <div class="row" data-n="rocher shake"> <span class="name">Rocher Shake</span> <span class="price">₹175</span> </div>
         </div>
 
         <!-- DRUM FREEZERS -->
         <div class="section" id="drum">
             <h2 class="section-title">🍧 DRUM FREEZERS</h2>
-            <div class="item-row" data-n="icy blue"> <span class="name">Icy Blue</span> <span class="price">₹121</span> </div>
-            <div class="item-row" data-n="e-lichi slush"> <span class="name">E-Lichi Slush</span> <span class="price">₹121</span> </div>
-            <div class="item-row" data-n="lemon mocktail"> <span class="name">Lemon Mocktail</span> <span class="price">₹121</span> </div>
+            <div class="row" data-n="icy blue"> <span class="name">Icy Blue</span> <span class="price">₹121</span> </div>
+            <div class="row" data-n="e-lichi slush"> <span class="name">E-Lichi Slush</span> <span class="price">₹121</span> </div>
+            <div class="row" data-n="lemon mocktail"> <span class="name">Lemon Mocktail</span> <span class="price">₹121</span> </div>
         </div>
 
         <!-- EXTRAS -->
@@ -303,15 +302,11 @@
         </div>
     </div>
 
-    <!-- WHATSAPP ORDER -->
-    <a href="https://wa.me/919999999999?text=Hi NBC! I want to order from the digital menu." class="wa-btn" target="_blank">
-        Order on WhatsApp
-    </a>
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/919999999999" class="wa-float" target="_blank">Order on WhatsApp</a>
 
     <script>
         lucide.createIcons();
-
-        // Dark Mode
         function toggleTheme() {
             const b = document.body; const i = document.getElementById('t-icon');
             const isD = b.getAttribute('data-theme') === 'dark';
@@ -320,27 +315,22 @@
             lucide.createIcons();
         }
 
-        // Search Filter
-        function searchFn() {
+        function filter() {
             let val = document.getElementById('search').value.toLowerCase();
-            let rows = document.querySelectorAll('.item-row');
+            let rows = document.querySelectorAll('.row');
             let secs = document.querySelectorAll('.section');
-            let match = 0;
-
+            let count = 0;
             rows.forEach(r => {
-                let txt = r.getAttribute('data-n');
-                if(txt.includes(val)) { r.style.display = 'flex'; match++; }
-                else { r.style.display = 'none'; }
+                if(r.getAttribute('data-n').includes(val)) { r.style.display = 'flex'; count++; }
+                else r.style.display = 'none';
             });
-
             secs.forEach(s => {
-                let v = s.querySelectorAll('.item-row[style="display: flex;"]').length > 0;
-                s.style.display = (v || val === "") ? 'block' : 'none';
+                let has = s.querySelectorAll('.row[style="display: flex;"]').length > 0;
+                s.style.display = (has || val === "") ? 'block' : 'none';
             });
-            document.getElementById('noMatch').style.display = (match === 0 && val !== "") ? 'block' : 'none';
+            document.getElementById('noMatch').style.display = (count === 0 && val !== "") ? 'block' : 'none';
         }
 
-        // Active Chip Scroll
         window.addEventListener('scroll', () => {
             let curr = "";
             document.querySelectorAll('.section').forEach(s => {
