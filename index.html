@@ -3,377 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NBC | Digital Menu</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>NBC | Nothing Before Coffee Menu</title>
+    
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         :root {
-            --bg: #FAF9F6;
-            --card: #ffffff;
-            --text: #3C2A21;
-            --muted: #7D6E66;
-            --accent: #D5CEA3;
-            --nbc-brown: #3C2A21;
+            --bg: #F8F5F2;
+            --surface: #FFFFFF;
+            --primary: #3C2A21; /* NBC Coffee Brown */
+            --secondary: #D5CEA3; /* NBC Gold/Tan */
+            --text-main: #1A1A1A;
+            --text-muted: #7D6E66;
+            --white: #FFFFFF;
             --wa-green: #25D366;
-            --header-height: 130px;
         }
 
         [data-theme="dark"] {
-            --bg: #1A1A1A;
-            --card: #262626;
-            --text: #F5F5F5;
-            --muted: #A0A0A0;
-            --accent: #D5CEA3;
-            --nbc-brown: #D5CEA3;
+            --bg: #121212;
+            --surface: #1E1E1E;
+            --primary: #D5CEA3;
+            --secondary: #3C2A21;
+            --text-main: #F5F5F5;
+            --text-muted: #A0A0A0;
         }
 
+        /* Essential Reset for Alignment */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #E0E0E0; /* Desktop background color */
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mobile Container - This fixes the layout alignment */
+        .app-container {
+            width: 100%;
+            max-width: 500px; /* Looks like a phone on desktop */
             background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden; /* Prevents side scrolling */
-            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
         }
 
-        /* Fixed Top Header */
-        .sticky-top {
-            position: fixed;
+        /* Fixed Header Section */
+        .header-fixed {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--bg);
+            background-color: var(--bg);
             z-index: 1000;
-            padding: 10px 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 20px 10px 20px;
         }
 
-        .header-main {
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
-        .logo {
+        .brand-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--nbc-brown);
+            color: var(--primary);
         }
 
+        /* Search Bar Alignment */
         .search-row {
             display: flex;
             gap: 10px;
-            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .search-box {
+        .search-wrapper {
             position: relative;
             flex: 1;
         }
 
-        .search-box i {
+        .search-wrapper i {
             position: absolute;
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
-        #searchBar {
+        #searchInput {
             width: 100%;
-            padding: 10px 10px 10px 35px;
+            padding: 12px 12px 12px 40px;
             border-radius: 12px;
-            border: 1px solid var(--accent);
-            background: var(--card);
-            color: var(--text);
+            border: 1px solid var(--secondary);
+            background: var(--surface);
+            color: var(--text-main);
             font-size: 14px;
             outline: none;
         }
 
-        .theme-btn {
-            background: var(--card);
-            border: 1px solid var(--accent);
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+        .theme-toggle {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            background: var(--surface);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text);
             cursor: pointer;
+            color: var(--text-main);
         }
 
-        /* Horizontal Category Bar */
-        .cat-bar {
+        /* Category Chips Horizontal Scroll */
+        .category-scroll {
             display: flex;
             overflow-x: auto;
             gap: 10px;
-            padding: 5px 0 10px 0;
+            padding-bottom: 10px;
             scrollbar-width: none;
         }
-        .cat-bar::-webkit-scrollbar { display: none; }
+
+        .category-scroll::-webkit-scrollbar { display: none; }
 
         .cat-chip {
-            padding: 6px 16px;
-            background: var(--card);
-            border: 1px solid var(--accent);
-            border-radius: 20px;
+            padding: 8px 18px;
+            background: var(--surface);
+            border: 1px solid var(--secondary);
+            border-radius: 25px;
             white-space: nowrap;
-            text-decoration: none;
-            color: var(--text);
             font-size: 13px;
             font-weight: 600;
+            text-decoration: none;
+            color: var(--text-main);
         }
 
-        /* Menu Container */
-        .container {
-            margin-top: var(--header-height);
-            padding: 15px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .cat-chip.active {
+            background: var(--primary);
+            color: var(--bg);
+            border-color: var(--primary);
         }
 
-        .section-title {
+        /* Menu Items Alignment */
+        .menu-body {
+            padding: 10px 20px 100px 20px;
+        }
+
+        .section-header {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            margin: 25px 0 15px;
-            color: var(--nbc-brown);
-            scroll-margin-top: 150px; /* Fixes overlap when clicking category */
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+            color: var(--primary);
+            scroll-margin-top: 180px; /* Prevents header overlap */
         }
 
         .menu-item {
-            background: var(--card);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 12px;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        .item-detail h3 {
-            font-size: 1rem;
+        .item-text {
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        .item-text h3 {
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 4px;
         }
 
-        .item-detail p {
-            font-size: 0.8rem;
-            color: var(--muted);
-            max-width: 180px;
+        .item-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
         .item-price {
             font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--nbc-brown);
-        }
-
-        /* Floating Order Button */
-        .wa-order {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--wa-green);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            z-index: 1001;
-            width: fit-content;
+            font-size: 16px;
+            color: var(--primary);
             white-space: nowrap;
         }
 
-        /* Empty State */
-        #noResults {
+        /* WhatsApp Floating Button */
+        .wa-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 460px;
+            background-color: var(--wa-green);
+            color: white;
             text-align: center;
-            padding: 40px;
+            padding: 16px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            z-index: 2000;
+        }
+
+        /* Search No-Result State */
+        #emptyState {
             display: none;
-            color: var(--muted);
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-    <div class="sticky-top">
-        <div class="header-main">
-            <div class="logo">Nothing Before Coffee</div>
-            <button class="theme-btn" onclick="toggleTheme()">
+<div class="app-container">
+    
+    <!-- HEADER -->
+    <div class="header-fixed">
+        <div class="top-bar">
+            <div class="brand-logo">Nothing Before Coffee</div>
+            <div class="theme-toggle" onclick="toggleTheme()">
                 <i data-lucide="moon" id="themeIcon"></i>
-            </button>
-        </div>
-        
-        <div class="search-row">
-            <div class="search-box">
-                <i data-lucide="search" size="16"></i>
-                <input type="text" id="searchBar" placeholder="Search menu...">
             </div>
         </div>
 
-        <div class="cat-bar">
-            <a href="#hot" class="cat-chip">Hot Coffee</a>
+        <div class="search-row">
+            <div class="search-wrapper">
+                <i data-lucide="search" size="18"></i>
+                <input type="text" id="searchInput" placeholder="Search for your favorite brew...">
+            </div>
+        </div>
+
+        <div class="category-scroll">
+            <a href="#hot" class="cat-chip active">Hot Coffee</a>
             <a href="#cold" class="cat-chip">Cold Coffee</a>
+            <a href="#shakes" class="cat-chip">Thick Shakes</a>
             <a href="#mocktails" class="cat-chip">Mocktails</a>
-            <a href="#shakes" class="cat-chip">Shakes</a>
         </div>
     </div>
 
-    <div class="container" id="menu">
-        <div id="noResults">No items found...</div>
+    <!-- MENU ITEMS -->
+    <div class="menu-body" id="menuListing">
+        
+        <div id="emptyState">No drinks found. Try searching for something else!</div>
 
-        <!-- Hot Coffee -->
-        <div class="menu-section" id="hot">
-            <h2 class="section-title">Hot Coffee</h2>
+        <!-- Hot Coffee Section -->
+        <div class="menu-group" id="hot">
+            <h2 class="section-header">Hot Coffee</h2>
+            
             <div class="menu-item" data-name="cappuccino">
-                <div class="item-detail">
+                <div class="item-text">
                     <h3>Cappuccino</h3>
-                    <p>Espresso with steamed milk and thick foam layer.</p>
+                    <p>Signature espresso with steamed milk and deep foam layer.</p>
                 </div>
                 <div class="item-price">₹149</div>
             </div>
+
             <div class="menu-item" data-name="americano">
-                <div class="item-detail">
+                <div class="item-text">
                     <h3>Americano</h3>
-                    <p>Rich espresso shots topped with hot water.</p>
+                    <p>Bold espresso shot smoothed out with hot water.</p>
                 </div>
                 <div class="item-price">₹129</div>
             </div>
         </div>
 
-        <!-- Cold Coffee -->
-        <div class="menu-section" id="cold">
-            <h2 class="section-title">Cold Coffee</h2>
+        <!-- Cold Coffee Section -->
+        <div class="menu-group" id="cold">
+            <h2 class="section-header">Cold Coffee</h2>
+            
             <div class="menu-item" data-name="frappe">
-                <div class="item-detail">
-                    <h3>Signature Frappe</h3>
-                    <p>Ice-blended coffee topped with whipped cream.</p>
+                <div class="item-text">
+                    <h3>Classic Frappe</h3>
+                    <p>Rich coffee blended with ice and topped with cream.</p>
                 </div>
-                <div class="item-price">₹199</div>
+                <div class="item-price">₹189</div>
             </div>
+
             <div class="menu-item" data-name="hazelnut latte">
-                <div class="item-detail">
+                <div class="item-text">
                     <h3>Iced Hazelnut Latte</h3>
-                    <p>Chilled milk and coffee with nutty hazelnut.</p>
+                    <p>Nutty hazelnut notes with chilled espresso and milk.</p>
                 </div>
                 <div class="item-price">₹219</div>
             </div>
         </div>
 
-        <!-- Mocktails -->
-        <div class="menu-section" id="mocktails">
-            <h2 class="section-title">Mocktails</h2>
+        <!-- Shakes Section -->
+        <div class="menu-group" id="shakes">
+            <h2 class="section-header">Thick Shakes</h2>
+            <div class="menu-item" data-name="belgian chocolate">
+                <div class="item-text">
+                    <h3>Belgian Chocolate</h3>
+                    <p>Indulgent dark chocolate shake for cocoa lovers.</p>
+                </div>
+                <div class="item-price">₹239</div>
+            </div>
+        </div>
+
+        <!-- Mocktails Section -->
+        <div class="menu-group" id="mocktails">
+            <h2 class="section-header">Mocktails</h2>
             <div class="menu-item" data-name="mojito">
-                <div class="item-detail">
+                <div class="item-text">
                     <h3>Virgin Mojito</h3>
-                    <p>Fresh mint, lemon, and bubbly soda.</p>
+                    <p>Refreshing mint and lime with bubbly soda.</p>
                 </div>
                 <div class="item-price">₹129</div>
             </div>
         </div>
 
-        <!-- Shakes -->
-        <div class="menu-section" id="shakes">
-            <h2 class="section-title">Shakes</h2>
-            <div class="menu-item" data-name="chocolate shake">
-                <div class="item-detail">
-                    <h3>Belgian Chocolate</h3>
-                    <p>Pure Belgian chocolate blended thick.</p>
-                </div>
-                <div class="item-price">₹239</div>
-            </div>
-        </div>
     </div>
 
-    <a href="https://wa.me/919999999999?text=I'd like to order from NBC!" class="wa-order">
+    <!-- WHATSAPP CTA -->
+    <a href="https://wa.me/919999999999?text=Hi NBC! I'd like to place an order." class="wa-btn" target="_blank">
         <i data-lucide="message-circle" size="20"></i>
         Order on WhatsApp
     </a>
 
-    <script>
-        // Init Icons
-        lucide.createIcons();
+</div>
 
-        // Dark Mode Logic
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            
-            if (isDark) {
-                body.removeAttribute('data-theme');
-                icon.setAttribute('data-lucide', 'moon');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                icon.setAttribute('data-lucide', 'sun');
-            }
-            lucide.createIcons();
+<script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Theme Toggle Function
+    function toggleTheme() {
+        const body = document.body;
+        const themeIcon = document.getElementById('themeIcon');
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        
+        if (isDark) {
+            body.removeAttribute('data-theme');
+            themeIcon.setAttribute('data-lucide', 'moon');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
         }
+        lucide.createIcons(); // Re-render icons
+    }
 
-        // Real-time Search Logic
-        const searchBar = document.getElementById('searchBar');
-        const items = document.querySelectorAll('.menu-item');
-        const sections = document.querySelectorAll('.menu-section');
-        const noResults = document.getElementById('noResults');
+    // Real-time Search Filter
+    const searchInput = document.getElementById('searchInput');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const menuGroups = document.querySelectorAll('.menu-group');
+    const emptyState = document.getElementById('emptyState');
 
-        searchBar.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            let hasVisibleItems = false;
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase();
+        let visibleCount = 0;
 
-            items.forEach(item => {
-                const name = item.getAttribute('data-name').toLowerCase();
-                if (name.includes(query)) {
-                    item.style.display = 'flex';
-                    hasVisibleItems = true;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Hide sections with no matches
-            sections.forEach(section => {
-                const visibleInSec = section.querySelectorAll('.menu-item[style="display: flex;"]');
-                section.style.display = visibleInSec.length > 0 ? 'block' : 'none';
-            });
-
-            noResults.style.display = hasVisibleItems ? 'none' : 'block';
+        menuItems.forEach(item => {
+            const name = item.getAttribute('data-name').toLowerCase();
+            if (name.includes(value)) {
+                item.style.display = 'flex';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
         });
 
-        // Highlight category chip on scroll
-        window.addEventListener('scroll', () => {
-            let current = "";
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute("id");
-                }
-            });
-
-            document.querySelectorAll(".cat-chip").forEach((chip) => {
-                chip.style.background = "var(--card)";
-                chip.style.color = "var(--text)";
-                if (chip.getAttribute("href") === `#${current}`) {
-                    chip.style.background = "var(--nbc-brown)";
-                    chip.style.color = "white";
-                }
-            });
+        // Hide headers if no items in group
+        menuGroups.forEach(group => {
+            const hasVisible = group.querySelectorAll('.menu-item[style="display: flex;"]').length > 0;
+            group.style.display = hasVisible ? 'block' : 'none';
         });
-    </script>
+
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+
+    // Category Chip Active State on Scroll
+    window.addEventListener('scroll', () => {
+        let current = "";
+        menuGroups.forEach((group) => {
+            const sectionTop = group.offsetTop;
+            const sectionHeight = group.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = group.getAttribute("id");
+            }
+        });
+
+        document.querySelectorAll(".cat-chip").forEach((chip) => {
+            chip.classList.remove("active");
+            if (chip.getAttribute("href") === `#${current}`) {
+                chip.classList.add("active");
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
