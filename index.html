@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nothing Before Coffee | Digital Menu</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Light Mode Colors (NBC Aesthetic) */
+            --bg-color: #FAF9F6;
+            --card-bg: #ffffff;
+            --text-main: #3C2A21;
+            --text-muted: #6D5D55;
+            --accent: #D5CEA3;
+            --primary-brown: #3C2A21;
+            --whatsapp-green: #25D366;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-main: #E5E5CB;
+            --text-muted: #A0938E;
+            --accent: #D5CEA3;
+            --primary-brown: #D5CEA3;
+            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Header & Search */
+        header {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-color);
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-brown);
+            margin-bottom: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        #searchBar {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border-radius: 25px;
+            border: 1px solid var(--accent);
+            background: var(--card-bg);
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Categories Navigation */
+        .categories-nav {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 1.5rem;
+            gap: 15px;
+            scrollbar-width: none;
+            position: sticky;
+            top: 140px;
+            background: var(--bg-color);
+            z-index: 90;
+        }
+
+        .categories-nav::-webkit-scrollbar { display: none; }
+
+        .cat-link {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .cat-link.active {
+            background: var(--primary-brown);
+            color: var(--bg-color);
+        }
+
+        /* Menu Content */
+        .menu-container {
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .item-info h3 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .item-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--primary-brown);
+            font-size: 1.1rem;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--whatsapp-green);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+        }
+
+        /* Mobile View Fixes */
+        @media (max-width: 480px) {
+            header { padding: 1.5rem 1rem; }
+            .brand-logo { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-logo">Nothing Before Coffee</div>
+        <div class="controls">
+            <div class="search-container">
+                <i data-lucide="search" size="18"></i>
+                <input type="text" id="searchBar" placeholder="Search for your favorite brew...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i data-lucide="moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <nav class="categories-nav">
+        <a href="#hot-coffee" class="cat-link active">Hot Coffee</a>
+        <a href="#cold-coffee" class="cat-link">Cold Coffee</a>
+        <a href="#mocktails" class="cat-link">Mocktails</a>
+        <a href="#shakes" class="cat-link">Shakes</a>
+    </nav>
+
+    <div class="menu-container" id="menuContent">
+        <!-- Hot Coffee -->
+        <div class="menu-section" id="hot-coffee">
+            <h2 class="section-title">Hot Coffee</h2>
+            <div class="item-card" data-name="espresso">
+                <div class="item-info">
+                    <h3>Classic Espresso</h3>
+                    <p>Rich, bold, and pure caffeine shot.</p>
+                </div>
+                <div class="item-price">₹99</div>
+            </div>
+            <div class="item-card" data-name="cappuccino">
+                <div class="item-info">
+                    <h3>Cappuccino</h3>
+                    <p>Double shot with steamed milk & thick foam.</p>
+                </div>
+                <div class="item-price">₹149</div>
+            </div>
+        </div>
+
+        <!-- Cold Coffee -->
+        <div class="menu-section" id="cold-coffee">
+            <h2 class="section-title">Cold Coffee</h2>
+            <div class="item-card" data-name="frappe">
+                <div class="item-info">
+                    <h3>Signature Frappe</h3>
+                    <p>Blended cold coffee topped with cream.</p>
+                </div>
+                <div class="item-price">₹199</div>
+            </div>
+            <div class="item-card" data-name="iced latte">
+                <div class="item-info">
+                    <h3>Iced Hazelnut Latte</h3>
+                    <p>Chilled milk and espresso with hazelnut notes.</p>
+                </div>
+                <div class="item-price">₹219</div>
+            </div>
+        </div>
+
+        <!-- Mocktails -->
+        <div class="menu-section" id="mocktails">
+            <h2 class="section-title">Mocktails</h2>
+            <div class="item-card" data-name="virgin mojito">
+                <div class="item-info">
+                    <h3>Virgin Mojito</h3>
+                    <p>Fresh mint, lime, and sparkling soda.</p>
+                </div>
+                <div class="item-price">₹129</div>
+            </div>
+        </div>
+
+        <!-- Shakes -->
+        <div class="menu-section" id="shakes">
+            <h2 class="section-title">Shakes</h2>
+            <div class="item-card" data-name="belgian chocolate shake">
+                <div class="item-info">
+                    <h3>Belgian Chocolate Shake</h3>
+                    <p>Dense, dark chocolate blended to perfection.</p>
+                </div>
+                <div class="item-price">₹229</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Order Button -->
+    <!-- Replace 919999999999 with actual shop phone number -->
+    <a href="https://wa.me/919999999999?text=Hi! I want to place an order from Nothing Before Coffee." class="whatsapp-float" target="_blank">
+        <i data-lucide="message-circle"></i>
+        Order on WhatsApp
+    </a>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.setAttribute('data-lucide', 'moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        }
+
+        // Search Functionality
+        const searchBar = document.getElementById('searchBar');
+        searchBar.addEventListener('keyup', (e) => {
+            const term = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.item-card');
+            
+            items.forEach(item => {
+                const name = item.getAttribute('data-name');
+                if (name.includes(term)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide empty sections
+            document.querySelectorAll('.menu-section').forEach(section => {
+                const visibleItems = section.querySelectorAll('.item-card[style="display: flex;"]');
+                section.style.display = visibleItems.length === 0 && term !== "" ? 'none' : 'block';
+            });
+        });
+
+        // Category Navigation Active State
+        const links = document.querySelectorAll('.cat-link');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
