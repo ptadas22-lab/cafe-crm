@@ -1,346 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NBC | Digital Menu</title>
-    
-    <!-- Premium Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lassi Magic — Digital Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & ROOT ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --lime:#c8f135;
+  --lime2:#a8d010;
+  --orange:#ff6b1a;
+  --orange2:#e05010;
+  --pink:#ff3d7f;
+  --teal:#00c9b1;
+  --purple:#7c3aed;
+  --yellow:#ffd60a;
+  --bg:#0a0e06;
+  --bg2:#111508;
+  --bg3:#181e0a;
+  --surface:#1a2010;
+  --surface2:#222a12;
+  --border:rgba(200,241,53,.1);
+  --text:#f0f4e0;
+  --text2:#a0b060;
+  --text3:#506030;
+  --ff-head:'Bebas Neue',Impact,sans-serif;
+  --ff-body:'Nunito',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+}
 
-    <style>
-        :root {
-            --bg: #FDFCFB;
-            --surface: #ffffff;
-            --primary: #3C2A21; /* NBC Brown */
-            --accent: #D5CEA3; /* NBC Gold */
-            --text: #1A1A1A;
-            --muted: #74645C;
-            --wa: #25D366;
-        }
+html{scroll-behavior:smooth;}
 
-        [data-theme="dark"] {
-            --bg: #121212;
-            --surface: #1E1E1E;
-            --primary: #D5CEA3;
-            --text: #F5F5F5;
-            --muted: #A0938E;
-        }
+body{
+  font-family:var(--ff-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 
-        /* The Scroll Fix */
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 210px; /* This prevents header from covering titles */
-        }
+/* ── GRAIN OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  opacity:.4;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+/* ── BLOBS ── */
+.blob{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;animation:drift 20s ease-in-out infinite;}
+.blob1{width:500px;height:500px;background:rgba(200,241,53,.06);top:-100px;left:-100px;animation-delay:0s;}
+.blob2{width:400px;height:400px;background:rgba(255,107,26,.05);bottom:-100px;right:-100px;animation-delay:-7s;}
+.blob3{width:300px;height:300px;background:rgba(0,201,177,.04);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-14s;}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-20px) scale(1.05);}66%{transform:translate(-20px,30px) scale(.95);}}
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:60px 24px 40px;
+  text-align:center;
+  overflow:hidden;
+}
 
-        /* Header - Fixed but with safe space */
-        .fixed-header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            max-width: 500px;
-            background: var(--bg);
-            z-index: 2000;
-            padding: 15px 20px 10px;
-            border-bottom: 2px solid var(--accent);
-        }
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(200,241,53,.08);
+  border:1px solid rgba(200,241,53,.2);
+  border-radius:40px;
+  padding:6px 16px;
+  font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lime);
+  margin-bottom:24px;
+  animation:fadeDown .6s var(--spring) both;
+}
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
 
-        .logo { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--primary); }
+.hero-title{
+  font-family:var(--ff-head);
+  font-size:clamp(64px,16vw,160px);
+  line-height:.9;
+  letter-spacing:-.01em;
+  color:var(--text);
+  animation:fadeDown .7s var(--spring) .1s both;
+}
+.hero-title span{color:var(--lime);}
 
-        .search-box {
-            position: relative;
-            margin-bottom: 12px;
-        }
+.hero-subtitle{
+  font-size:clamp(13px,3vw,16px);
+  font-weight:300;
+  color:var(--text2);
+  margin-top:12px;
+  letter-spacing:.08em;
+  animation:fadeDown .7s var(--spring) .2s both;
+}
 
-        .search-box i {
-            position: absolute; left: 12px; top: 50%;
-            transform: translateY(-50%); color: var(--muted);
-        }
+.hero-tags{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  margin-top:24px;
+  animation:fadeDown .7s var(--spring) .3s both;
+}
+.hero-tag{
+  padding:5px 14px;border-radius:20px;
+  font-size:12px;font-weight:600;
+  border:1px solid;
+  cursor:default;
+  transition:transform .2s var(--spring);
+}
+.hero-tag:hover{transform:scale(1.08) translateY(-2px);}
+.ht1{color:var(--orange);border-color:rgba(255,107,26,.3);background:rgba(255,107,26,.08);}
+.ht2{color:var(--teal);border-color:rgba(0,201,177,.3);background:rgba(0,201,177,.08);}
+.ht3{color:var(--pink);border-color:rgba(255,61,127,.3);background:rgba(255,61,127,.08);}
+.ht4{color:var(--yellow);border-color:rgba(255,214,10,.3);background:rgba(255,214,10,.08);}
+.ht5{color:var(--lime);border-color:rgba(200,241,53,.3);background:rgba(200,241,53,.08);}
 
-        #search {
-            width: 100%; padding: 12px 40px; border-radius: 12px;
-            border: 1px solid var(--accent); background: var(--surface);
-            color: var(--text); font-size: 16px; outline: none;
-        }
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
 
-        /* Chips Navigation */
-        .chip-nav {
-            display: flex; overflow-x: auto; gap: 8px; padding-bottom: 5px;
-            scrollbar-width: none;
-        }
-        .chip-nav::-webkit-scrollbar { display: none; }
+/* ── NAV TABS ── */
+.nav-wrap{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,14,6,.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 16px;
+}
+.nav{
+  display:flex;gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  max-width:900px;margin:0 auto;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav-btn{
+  font-family:var(--ff-body);font-size:12px;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:14px 18px;
+  border:none;background:transparent;
+  color:var(--text3);cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  transition:all .2s var(--ease);
+  flex-shrink:0;
+}
+.nav-btn:hover{color:var(--text2);}
+.nav-btn.active{color:var(--lime);border-bottom-color:var(--lime);}
 
-        .chip {
-            padding: 8px 16px; background: var(--surface); border: 1px solid var(--accent);
-            border-radius: 20px; white-space: nowrap; font-size: 12px;
-            font-weight: 700; text-decoration: none; color: var(--text);
-        }
+/* ── MAIN ── */
+.main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:40px 16px 80px;}
 
-        .chip.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+/* ── SECTION ── */
+.section{margin-bottom:60px;opacity:0;transform:translateY(24px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+.section.visible{opacity:1;transform:translateY(0);}
 
-        /* CONTENT AREA - Massive top margin to ensure first items show */
-        .content {
-            width: 100%;
-            max-width: 500px;
-            padding: 210px 20px 120px; /* 210px ensures items start after header */
-        }
+.section-header{
+  display:flex;align-items:flex-end;gap:16px;
+  margin-bottom:24px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.section-emoji{font-size:32px;line-height:1;}
+.section-title{
+  font-family:var(--ff-head);
+  font-size:clamp(32px,6vw,52px);
+  line-height:.95;
+  letter-spacing:.01em;
+}
+.section-count{
+  margin-left:auto;
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  color:var(--text3);
+  padding:3px 8px;border-radius:4px;
+  background:var(--surface);
+  align-self:center;
+}
 
-        .section { margin-bottom: 40px; }
+/* ── COLOR ACCENTS PER SECTION ── */
+.sec-lassi .section-title{color:var(--lime);}
+.sec-falooda .section-title{color:var(--pink);}
+.sec-scoops .section-title{color:var(--teal);}
+.sec-desserts .section-title{color:var(--yellow);}
+.sec-cake .section-title{color:var(--orange);}
+.sec-chocshake .section-title{color:var(--orange);}
+.sec-fruitshake .section-title{color:var(--teal);}
+.sec-coldcoffee .section-title{color:var(--purple);}
+.sec-hotdrink .section-title{color:var(--orange);}
+.sec-freshpizza .section-title{color:var(--pink);}
+.sec-freshjuice .section-title{color:var(--lime);}
+.sec-eatall .section-title{color:var(--yellow);}
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
-        }
+/* ── GRID ── */
+.items-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:10px;
+}
 
-        /* List Rows - Flexbox ensures nothing is cut off */
-        .row {
-            background: var(--surface);
-            padding: 16px;
-            margin-bottom: 10px;
-            border-radius: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
+/* ── ITEM CARD ── */
+.item-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  cursor:pointer;
+  transition:all .2s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.item-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent,#c8f135)06,transparent 50%);
+  opacity:0;transition:opacity .2s;
+}
+.item-card:hover{border-color:rgba(200,241,53,.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.item-card:hover::before{opacity:1;}
+.item-card:active{transform:translateY(0) scale(.98);}
 
-        .name { font-weight: 600; font-size: 14px; flex: 1; padding-right: 10px; }
-        .price { font-weight: 700; color: var(--primary); font-size: 15px; }
+.item-info{flex:1;min-width:0;}
+.item-name{font-size:14px;font-weight:600;color:var(--text);line-height:1.3;}
+.item-note{font-size:11px;color:var(--text3);margin-top:2px;font-style:italic;}
 
-        /* Floating Order Button */
-        .wa-float {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 450px; background: var(--wa);
-            color: white; text-align: center; padding: 16px; border-radius: 15px;
-            text-decoration: none; font-weight: 700; z-index: 3000;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
+.item-price{
+  font-family:var(--ff-head);
+  font-size:22px;
+  color:var(--lime);
+  flex-shrink:0;
+  letter-spacing:.02em;
+  line-height:1;
+}
+.item-price sup{font-size:13px;vertical-align:top;margin-top:3px;display:inline-block;font-family:var(--ff-body);font-weight:700;}
 
-        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text); }
-        #noMatch { display: none; text-align: center; padding: 50px; color: var(--muted); }
-    </style>
+/* ── CART BUTTON ── */
+.item-add{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid rgba(200,241,53,.3);
+  background:transparent;
+  color:var(--lime);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:all .2s var(--spring);
+}
+.item-add:hover{background:var(--lime);color:#000;transform:scale(1.15);}
+.item-add.added{background:var(--lime);color:#000;}
+
+/* ── SUBSECTION LABEL ── */
+.sub-label{
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--text3);
+  padding:12px 0 6px;
+  grid-column:1/-1;
+  display:flex;align-items:center;gap:10px;
+}
+.sub-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── CART ── */
+.cart-bar{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  z-index:200;
+  background:var(--lime);color:#000;
+  border-radius:40px;
+  padding:14px 28px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 16px 40px rgba(0,0,0,.4),0 0 0 1px rgba(200,241,53,.3);
+  transition:transform .4s var(--spring);
+  cursor:pointer;
+  min-width:260px;
+}
+.cart-bar.show{transform:translateX(-50%) translateY(0);}
+.cart-count{
+  background:#000;color:var(--lime);
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;
+  font-family:var(--ff-head);letter-spacing:.03em;
+  flex-shrink:0;
+}
+.cart-label{font-weight:700;font-size:14px;letter-spacing:.04em;flex:1;}
+.cart-total{font-family:var(--ff-head);font-size:20px;letter-spacing:.03em;}
+
+/* ── CART MODAL ── */
+.cart-modal-bg{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,.8);backdrop-filter:blur(8px);
+  display:none;align-items:flex-end;justify-content:center;
+  padding:20px;
+}
+.cart-modal-bg.open{display:flex;}
+.cart-modal{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:20px 20px 0 0;
+  width:100%;max-width:520px;
+  max-height:80vh;overflow:hidden;
+  display:flex;flex-direction:column;
+  animation:slideUp .35s var(--spring);
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.cart-modal-header{
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cart-modal-title{font-family:var(--ff-head);font-size:26px;color:var(--lime);}
+.cart-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.cart-close:hover{background:var(--surface2);color:var(--text);}
+.cart-items{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
+.cart-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.cart-item:last-child{border-bottom:none;}
+.cart-item-name{flex:1;font-size:14px;font-weight:600;}
+.cart-item-price{font-family:var(--ff-head);font-size:18px;color:var(--lime);}
+.cart-qty{display:flex;align-items:center;gap:8px;}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.qty-btn:hover{background:var(--surface2);}
+.qty-num{font-size:14px;font-weight:700;min-width:18px;text-align:center;}
+.cart-footer{padding:16px 20px;border-top:1px solid var(--border);}
+.cart-summary{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.cart-summary-label{font-size:13px;color:var(--text2);}
+.cart-summary-val{font-family:var(--ff-head);font-size:24px;color:var(--lime);}
+.order-btn{
+  width:100%;padding:14px;border-radius:12px;border:none;
+  background:var(--lime);color:#000;
+  font-family:var(--ff-head);font-size:22px;letter-spacing:.05em;
+  cursor:pointer;transition:all .2s var(--ease);
+}
+.order-btn:hover{background:var(--lime2);transform:scale(1.01);}
+.cart-empty{text-align:center;padding:40px 20px;color:var(--text3);}
+.cart-empty-icon{font-size:40px;margin-bottom:10px;}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:32px 16px;
+  border-top:1px solid var(--border);
+}
+.footer-brand{font-family:var(--ff-head);font-size:36px;color:var(--lime);letter-spacing:.05em;}
+.footer-text{font-size:12px;color:var(--text3);margin-top:4px;font-weight:300;letter-spacing:.08em;}
+
+/* ── SCROLL HINT ── */
+.scroll-hint{
+  text-align:center;padding:6px 0 32px;
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);
+  animation:bounce 2s ease infinite;
+  position:relative;z-index:1;
+}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+/* ── TOAST ── */
+.toasts{position:fixed;bottom:90px;right:20px;z-index:400;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.toast{
+  background:var(--surface2);border:1px solid rgba(200,241,53,.2);
+  border-radius:10px;padding:10px 16px;
+  font-size:13px;font-weight:600;color:var(--lime);
+  display:flex;align-items:center;gap:8px;
+  animation:toastIn .3s var(--spring);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+@keyframes toastIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:translateX(0);}}
+
+/* ── SEARCH ── */
+.search-wrap{max-width:400px;margin:0 auto 32px;position:relative;z-index:1;}
+.search-input{
+  width:100%;padding:12px 16px 12px 44px;
+  border-radius:12px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);
+  font-family:var(--ff-body);font-size:14px;
+  outline:none;transition:border .2s;
+}
+.search-input::placeholder{color:var(--text3);}
+.search-input:focus{border-color:rgba(200,241,53,.4);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px;pointer-events:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .items-grid{grid-template-columns:1fr;}
+  .hero-title{line-height:.85;}
+}
+</style>
 </head>
 <body>
 
-    <div class="fixed-header">
-        <div class="header-top">
-            <div class="logo">Nothing Before Coffee</div>
-            <button class="theme-btn" onclick="toggleTheme()"><i data-lucide="moon" id="t-icon"></i></button>
-        </div>
-        <div class="search-box">
-            <i data-lucide="search" size="18"></i>
-            <input type="text" id="search" placeholder="Search drinks..." onkeyup="filter()">
-        </div>
-        <div class="chip-nav">
-            <a href="#hot" class="chip active">Hot Coffee</a>
-            <a href="#milk" class="chip">With Milk</a>
-            <a href="#icy" class="chip">Icy Coffee</a>
-            <a href="#choco" class="chip">Choco</a>
-            <a href="#tea" class="chip">Tea</a>
-            <a href="#shakes-cold" class="chip">Cold Coffee & Shakes</a>
-            <a href="#frappe" class="chip">Frappe</a>
-            <a href="#iced-tea" class="chip">Iced Tea</a>
-            <a href="#shakes" class="chip">Shakes</a>
-            <a href="#drum" class="chip">Drum Freezers</a>
-            <a href="#extras" class="chip">Extras</a>
-        </div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><span></span>Hubballi's Favourite Spot</div>
+  <h1 class="hero-title">Lassi<br/><span>Magic</span></h1>
+  <p class="hero-subtitle">Best Outdoor Café · Fresh &amp; Pure &amp; Natural</p>
+  <div class="hero-tags">
+    <span class="hero-tag ht1">🍊 Fresh Juices</span>
+    <span class="hero-tag ht2">🧋 Cold Coffee</span>
+    <span class="hero-tag ht3">🍨 Desserts</span>
+    <span class="hero-tag ht4">🍕 Pizza</span>
+    <span class="hero-tag ht5">🥛 Lassi</span>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="nav-wrap">
+  <nav class="nav" id="nav"></nav>
+</div>
+
+<div class="scroll-hint">↓ scroll to explore</div>
+
+<!-- SEARCH -->
+<div class="main">
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input class="search-input" type="text" id="searchInput" placeholder="Search any item…" oninput="searchMenu(this.value)"/>
+</div>
+
+<!-- MENU SECTIONS -->
+<div id="menuRoot"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Lassi Magic</div>
+  <div class="footer-text">All prices inclusive of taxes · Menu subject to availability<br/>Hubballi, Karnataka</div>
+</footer>
+
+<!-- CART BAR -->
+<div class="cart-bar" id="cartBar" onclick="openCart()">
+  <div class="cart-count" id="cartCount">0</div>
+  <div class="cart-label">View Order</div>
+  <div class="cart-total" id="cartBarTotal">₹0</div>
+</div>
+
+<!-- CART MODAL -->
+<div class="cart-modal-bg" id="cartModalBg" onclick="if(event.target===this)closeCart()">
+  <div class="cart-modal">
+    <div class="cart-modal-header">
+      <div class="cart-modal-title">Your Order</div>
+      <button class="cart-close" onclick="closeCart()">×</button>
     </div>
-
-    <div class="content">
-        <div id="noMatch">Item not found in menu.</div>
-
-        <!-- HOT COFFEE -->
-        <div class="section" id="hot">
-            <h2 class="section-title">☕ HOT COFFEE</h2>
-            <div class="row" data-n="espresso"> <span class="name">Espresso</span> <span class="price">₹99</span> </div>
-            <div class="row" data-n="dark latte"> <span class="name">Dark Latte</span> <span class="price">₹129</span> </div>
-            <div class="row" data-n="cafe mocha"> <span class="name">Café Mocha</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="caramel cappuccino latte"> <span class="name">Caramel Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="hazelnut cappuccino latte"> <span class="name">Hazelnut Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="tiramisu cappuccino latte"> <span class="name">Tiramisu Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="vanilla cappuccino latte"> <span class="name">Vanilla Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="irish cappuccino latte"> <span class="name">Irish Cappuccino Latte</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="vanilla cappuccino"> <span class="name">Vanilla Cappuccino</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="irish biscuit cappuccino latte"> <span class="name">Irish Biscuit Cappuccino Latte</span> <span class="price">₹159</span> </div>
-        </div>
-
-        <!-- HOT COFFEE WITH MILK -->
-        <div class="section" id="milk">
-            <h2 class="section-title">🥛 WITH MILK</h2>
-            <div class="row" data-n="espresso (coffee shot story)"> <span class="name">Espresso (coffee shot story)</span> <span class="price">₹70</span> </div>
-            <div class="row" data-n="americano"> <span class="name">Americano</span> <span class="price">₹85</span> </div>
-            <div class="row" data-n="flat city"> <span class="name">Flat City</span> <span class="price">₹95</span> </div>
-            <div class="row" data-n="icy coffee"> <span class="name">Icy Coffee</span> <span class="price">₹100</span> </div>
-        </div>
-
-        <!-- ICY COFFEE -->
-        <div class="section" id="icy">
-            <h2 class="section-title">🧊 ICY COFFEE</h2>
-            <div class="row" data-n="iced coffee"> <span class="name">Iced Coffee</span> <span class="price">₹109</span> </div>
-            <div class="row" data-n="iced latte"> <span class="name">Iced Latte</span> <span class="price">₹119</span> </div>
-            <div class="row" data-n="iced americano"> <span class="name">Iced Americano</span> <span class="price">₹109</span> </div>
-            <div class="row" data-n="iced latte pie"> <span class="name">Iced Latte Pie</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="iced mocha"> <span class="name">Iced Mocha</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="iced caramel"> <span class="name">Iced Caramel</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="cold brew"> <span class="name">Cold Brew</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="espresso-on ice cappuccino"> <span class="name">Espresso-on Ice Cappuccino</span> <span class="price">₹149</span> </div>
-        </div>
-
-        <!-- HOT CHOCO -->
-        <div class="section" id="choco">
-            <h2 class="section-title">🍫 HOT CHOCO</h2>
-            <div class="row" data-n="hot chocolate"> <span class="name">Hot Chocolate</span> <span class="price">₹115</span> </div>
-            <div class="row" data-n="hot nutella"> <span class="name">Hot Nutella</span> <span class="price">₹125</span> </div>
-            <div class="row" data-n="hot mocha"> <span class="name">Hot Mocha</span> <span class="price">₹125</span> </div>
-        </div>
-
-        <!-- HOT TEA -->
-        <div class="section" id="tea">
-            <h2 class="section-title">🍃 HOT TEA</h2>
-            <div class="row" data-n="lemon tea"> <span class="name">Lemon Tea</span> <span class="price">₹93</span> </div>
-            <div class="row" data-n="green tea"> <span class="name">Green Tea</span> <span class="price">₹93</span> </div>
-            <div class="row" data-n="assam tea"> <span class="name">Assam Tea</span> <span class="price">₹80</span> </div>
-        </div>
-
-        <!-- COLD COFFEE & SHAKES -->
-        <div class="section" id="shakes-cold">
-            <h2 class="section-title">❄️ COLD COFFEE & SHAKES</h2>
-            <div class="row" data-n="original shakes"> <span class="name">Original Shakes</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="black sunset mojito"> <span class="name">Black Sunset Mojito</span> <span class="price">₹175</span> </div>
-            <div class="row" data-n="strawberry mojito"> <span class="name">Strawberry Mojito</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="guava shakes"> <span class="name">Guava Shakes</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="shake oranges"> <span class="name">Shake Oranges</span> <span class="price">₹159</span> </div>
-            <div class="row" data-n="hazelnut pineapple"> <span class="name">Hazelnut Pineapple</span> <span class="price">₹170</span> </div>
-            <div class="row" data-n="kiwi shakes"> <span class="name">Kiwi Shakes</span> <span class="price">₹170</span> </div>
-            <div class="row" data-n="double choco chip oreo shake"> <span class="name">Double Choco Chip Oreo Shake</span> <span class="price">₹191</span> </div>
-            <div class="row" data-n="mocha pineapple"> <span class="name">Mocha Pineapple</span> <span class="price">₹233</span> </div>
-            <div class="row" data-n="nutella shakes"> <span class="name">Nutella Shakes</span> <span class="price">₹239</span> </div>
-            <div class="row" data-n="guava premium shakes"> <span class="name">Guava Shakes (Premium)</span> <span class="price">₹219</span> </div>
-            <div class="row" data-n="irish biscuit pineapple"> <span class="name">Irish Biscuit Pineapple</span> <span class="price">₹240</span> </div>
-            <div class="row" data-n="brownie shakes"> <span class="name">Brownie Shakes</span> <span class="price">₹240</span> </div>
-        </div>
-
-        <!-- SIGNATURE FRAPPE -->
-        <div class="section" id="frappe">
-            <h2 class="section-title">✨ SIGNATURE FRAPPE</h2>
-            <div class="row" data-n="classic frappe"> <span class="name">Classic Frappe</span> <span class="price">₹170</span> </div>
-            <div class="row" data-n="premium roasted frappe"> <span class="name">Premium Roasted Frappe</span> <span class="price">₹249</span> </div>
-        </div>
-
-        <!-- ICED TEA -->
-        <div class="section" id="iced-tea">
-            <h2 class="section-title">🍹 ICED TEA</h2>
-            <div class="row" data-n="lemon iced tea"> <span class="name">Lemon Iced Tea</span> <span class="price">₹110</span> </div>
-            <div class="row" data-n="peach iced tea"> <span class="name">Peach Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="row" data-n="strawberry iced tea"> <span class="name">Strawberry Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="row" data-n="cranberry iced tea"> <span class="name">Cranberry Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="row" data-n="watermelon iced tea"> <span class="name">Watermelon Iced Tea</span> <span class="price">₹119</span> </div>
-            <div class="row" data-n="redbull iced tea"> <span class="name">Redbull Iced Tea</span> <span class="price">₹149</span> </div>
-        </div>
-
-        <!-- SHAKES -->
-        <div class="section" id="shakes">
-            <h2 class="section-title">🥤 SHAKES</h2>
-            <div class="row" data-n="chocolate shake"> <span class="name">Chocolate Shake</span> <span class="price">₹96</span> </div>
-            <div class="row" data-n="blackcurrant shake"> <span class="name">Blackcurrant Shake</span> <span class="price">₹110</span> </div>
-            <div class="row" data-n="strawberry shake"> <span class="name">Strawberry Shake</span> <span class="price">₹110</span> </div>
-            <div class="row" data-n="oreo shake"> <span class="name">Oreo Shake</span> <span class="price">₹115</span> </div>
-            <div class="row" data-n="rose shake"> <span class="name">Rose Shake</span> <span class="price">₹115</span> </div>
-            <div class="row" data-n="kitkat shake"> <span class="name">Kitkat Shake</span> <span class="price">₹125</span> </div>
-            <div class="row" data-n="nutella shake"> <span class="name">Nutella Shake</span> <span class="price">₹125</span> </div>
-            <div class="row" data-n="snickers shake"> <span class="name">Snickers Shake</span> <span class="price">₹130</span> </div>
-            <div class="row" data-n="belgian chocolate shake"> <span class="name">Belgian Chocolate Shake</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="hazelnut shake"> <span class="name">Hazelnut Shake</span> <span class="price">₹149</span> </div>
-            <div class="row" data-n="brownie shake"> <span class="name">Brownie Shake</span> <span class="price">₹155</span> </div>
-            <div class="row" data-n="blueberry shake"> <span class="name">Blueberry Shake</span> <span class="price">₹160</span> </div>
-            <div class="row" data-n="lotus biscoff shake"> <span class="name">Lotus Biscoff Shake</span> <span class="price">₹175</span> </div>
-            <div class="row" data-n="rocher shake"> <span class="name">Rocher Shake</span> <span class="price">₹175</span> </div>
-        </div>
-
-        <!-- DRUM FREEZERS -->
-        <div class="section" id="drum">
-            <h2 class="section-title">🍧 DRUM FREEZERS</h2>
-            <div class="row" data-n="icy blue"> <span class="name">Icy Blue</span> <span class="price">₹121</span> </div>
-            <div class="row" data-n="e-lichi slush"> <span class="name">E-Lichi Slush</span> <span class="price">₹121</span> </div>
-            <div class="row" data-n="lemon mocktail"> <span class="name">Lemon Mocktail</span> <span class="price">₹121</span> </div>
-        </div>
-
-        <!-- EXTRAS -->
-        <div class="section" id="extras">
-            <h2 class="section-title">➕ EXTRAS</h2>
-            <div class="item-row" data-n="coffee shot"> <span class="name">Coffee Shot</span> <span class="price">₹66</span> </div>
-            <div class="item-row" data-n="ice cream scoop"> <span class="name">Ice Cream Scoop</span> <span class="price">₹55</span> </div>
-            <div class="item-row" data-n="extra syrup"> <span class="name">Extra Syrup</span> <span class="price">₹44</span> </div>
-            <div class="item-row" data-n="dairy cream"> <span class="name">Dairy Cream</span> <span class="price">₹33</span> </div>
-            <div class="item-row" data-n="choco cake"> <span class="name">Choco Cake</span> <span class="price">₹55</span> </div>
-        </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-summary">
+        <span class="cart-summary-label">Total</span>
+        <span class="cart-summary-val" id="cartTotal">₹0</span>
+      </div>
+      <button class="order-btn" onclick="placeOrder()">Place Order</button>
     </div>
+  </div>
+</div>
 
-    <!-- WHATSAPP -->
-    <a href="https://wa.me/919999999999" class="wa-float" target="_blank">Order on WhatsApp</a>
+<!-- TOASTS -->
+<div class="toasts" id="toastContainer"></div>
 
-    <script>
-        lucide.createIcons();
-        function toggleTheme() {
-            const b = document.body; const i = document.getElementById('t-icon');
-            const isD = b.getAttribute('data-theme') === 'dark';
-            if (isD) { b.removeAttribute('data-theme'); i.setAttribute('data-lucide', 'moon'); }
-            else { b.setAttribute('data-theme', 'dark'); i.setAttribute('data-lucide', 'sun'); }
-            lucide.createIcons();
-        }
+<script>
+// ── MENU DATA ──────────────────────────────────────────────────────────
 
-        function filter() {
-            let val = document.getElementById('search').value.toLowerCase();
-            let rows = document.querySelectorAll('.row');
-            let secs = document.querySelectorAll('.section');
-            let count = 0;
-            rows.forEach(r => {
-                if(r.getAttribute('data-n').includes(val)) { r.style.display = 'flex'; count++; }
-                else r.style.display = 'none';
-            });
-            secs.forEach(s => {
-                let has = s.querySelectorAll('.row[style="display: flex;"]').length > 0;
-                s.style.display = (has || val === "") ? 'block' : 'none';
-            });
-            document.getElementById('noMatch').style.display = (count === 0 && val !== "") ? 'block' : 'none';
-        }
+const MENU = [
+  {
+    id:'lassi', label:'Lassi', emoji:'🥛', accent:'#c8f135', cls:'sec-lassi',
+    items:[
+      {name:'Sweet Lassi', price:50},
+      {name:'Banana Lassi', price:60},
+      {name:'Mango Lassi', price:70},
+      {name:'Dry Fruit Lassi', price:80},
+    ]
+  },
+  {
+    id:'falooda', label:'Falooda', emoji:'🌹', accent:'#ff3d7f', cls:'sec-falooda',
+    items:[
+      {name:'Rose Falooda', price:80},
+      {name:'Kesar Falooda', price:90},
+      {name:'Royal Falooda', price:115},
+      {name:'Paan Falooda', price:100},
+    ]
+  },
+  {
+    id:'scoops', label:'Scoops', emoji:'🍦', accent:'#00c9b1', cls:'sec-scoops',
+    items:[
+      {name:'Mango Scoop', price:40},
+      {name:'Strawberry Scoop', price:40},
+      {name:'Black Currant Scoop', price:40},
+      {name:'Butterscotch Scoop', price:40},
+      {name:'Nutella Scoop', price:50},
+      {name:'Pistachio Scoop', price:50},
+    ]
+  },
+  {
+    id:'desserts', label:'Desserts', emoji:'🍮', accent:'#ffd60a', cls:'sec-desserts',
+    items:[
+      {name:'Hot Brownie', price:80},
+      {name:'Choco Fudge', price:80},
+      {name:'Fruit Salad', price:80},
+      {name:'Fried Brownie', price:80},
+      {name:'Boing', price:70},
+      {name:'Nutella Fudge', price:100},
+      {name:'Death by Chocolate', price:120},
+      {name:'Nutella Sundae', price:120},
+      {name:'Coconut Sundae', price:110},
+      {name:'Choco Oreo Sundae', price:110},
+      {name:'Brownie Sizzler', price:170},
+      {name:'Nutella Sizzler', price:170},
+    ]
+  },
+  {
+    id:'cake', label:'Cake Shake', emoji:'🎂', accent:'#ff6b1a', cls:'sec-cake',
+    items:[
+      {name:'Choco Truffle Shake', price:130},
+      {name:'Choco Oreo Shake', price:130},
+      {name:'Snickers Shake', price:130},
+      {name:'Mud Coffee Shake', price:130},
+      {name:'Mud Oreo Shake', price:130},
+      {name:'Coconut Shake', price:130},
+      {name:'Butterscotch Shake', price:130},
+    ]
+  },
+  {
+    id:'chocshake', label:'Choco Shakes', emoji:'🍫', accent:'#ff6b1a', cls:'sec-chocshake',
+    items:[
+      {name:'Belgian Chocolate', price:90},
+      {name:'Watermelon Choco', price:70},
+      {name:'Vanilla', price:70},
+      {name:'Kitkat', price:90},
+      {name:'Mango', price:80},
+      {name:'Hazelnut Pineapple', price:110},
+      {name:'Death by Chocolate', price:120},
+    ]
+  },
+  {
+    id:'fruitshake', label:'Fruit Shakes', emoji:'🍓', accent:'#00c9b1', cls:'sec-fruitshake',
+    items:[
+      {name:'Apple Shake', price:70},
+      {name:'Musk Melon Shake', price:70},
+      {name:'Franco Mocha', price:80},
+      {name:'Chikoo Shake', price:80},
+      {name:'Tropical Mix Fruit', price:90},
+      {name:'Hazelnut Strawberry', price:110},
+      {name:'Mix Fruit', price:80},
+    ]
+  },
+  {
+    id:'coldcoffee', label:'Cold Coffee', emoji:'☕', accent:'#7c3aed', cls:'sec-coldcoffee',
+    items:[
+      {name:'Black Rock Coffee', price:90},
+      {name:'Belgium Coffee', price:100},
+      {name:'Franco Coffee', price:110},
+      {name:'Caramel Coffee', price:120},
+      {name:'Tropical Mix Coffee', price:130},
+    ]
+  },
+  {
+    id:'hotdrink', label:'Hot Drinks', emoji:'🍵', accent:'#ff6b1a', cls:'sec-hotdrink',
+    items:[
+      {name:'Hot Coffee', price:60},
+      {name:'Hot Chocolate', price:80},
+      {name:'Horlicks', price:70},
+    ]
+  },
+  {
+    id:'freshjuice', label:'Fresh Juice', emoji:'🍊', accent:'#c8f135', cls:'sec-freshjuice',
+    items:[
+      {name:'Orange Juice', price:60},
+      {name:'Watermelon Juice', price:60},
+      {name:'Mango Juice', price:70},
+      {name:'Muskmelon Juice', price:70},
+      {name:'Mixed Fruit with Lime', price:110},
+    ]
+  },
+  {
+    id:'freshpizza', label:'Pizza', emoji:'🍕', accent:'#ff3d7f', cls:'sec-freshpizza',
+    items:[
+      {name:'Regular Pizza', price:120},
+      {name:'Large Pizza', price:180},
+    ]
+  },
+  {
+    id:'eatall', label:'Eat All', emoji:'🍔', accent:'#ffd60a', cls:'sec-eatall',
+    items:[
+      {name:'Hash Browns', price:80},
+      {name:'Grilled Sandwich', price:90},
+      {name:'Big Burgers', price:120},
+      {name:'Maggi Masala', price:80},
+      {name:'Extra Cheese', price:20},
+      {name:'Extra Corn', price:20},
+      {name:'Extra Chilli', price:20},
+    ]
+  },
+];
 
-        window.addEventListener('scroll', () => {
-            let curr = "";
-            document.querySelectorAll('.section').forEach(s => {
-                if (pageYOffset >= s.offsetTop - 250) curr = s.getAttribute("id");
-            });
-            document.querySelectorAll(".chip").forEach(c => {
-                c.classList.remove("active");
-                if (c.getAttribute("href") === `#${curr}`) c.classList.add("active");
-            });
-        });
-    </script>
+// ── CART ──────────────────────────────────────────────────────────────
+
+let cart = {}; // {id: {name,price,qty}}
+
+function cartKey(sec, name){ return sec + '__' + name; }
+
+function addToCart(secId, itemName, price, btn){
+  const key = cartKey(secId, itemName);
+  if(cart[key]){
+    cart[key].qty++;
+  } else {
+    cart[key] = {name: itemName, price, qty: 1, secId};
+  }
+  btn.classList.add('added');
+  btn.textContent = '✓';
+  updateCartUI();
+  toast('Added — ' + itemName);
+}
+
+function updateCartUI(){
+  const items = Object.values(cart);
+  const totalQty = items.reduce((a,i)=>a+i.qty,0);
+  const totalPrice = items.reduce((a,i)=>a+i.price*i.qty,0);
+  document.getElementById('cartCount').textContent = totalQty;
+  document.getElementById('cartBarTotal').textContent = '₹'+totalPrice;
+  document.getElementById('cartTotal').textContent = '₹'+totalPrice;
+  const bar = document.getElementById('cartBar');
+  if(totalQty > 0) bar.classList.add('show'); else bar.classList.remove('show');
+  renderCartItems();
+}
+
+function renderCartItems(){
+  const items = Object.entries(cart);
+  const el = document.getElementById('cartItems');
+  if(items.length === 0){
+    el.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div>Your cart is empty</div>';
+    return;
+  }
+  el.innerHTML = items.map(([key,item])=>`
+    <div class="cart-item">
+      <div class="cart-item-name">${item.name}</div>
+      <div class="cart-qty">
+        <button class="qty-btn" onclick="changeQty('${key}',-1)">−</button>
+        <div class="qty-num">${item.qty}</div>
+        <button class="qty-btn" onclick="changeQty('${key}',1)">+</button>
+      </div>
+      <div class="cart-item-price">₹${item.price * item.qty}</div>
+    </div>
+  `).join('');
+}
+
+function changeQty(key, delta){
+  if(!cart[key]) return;
+  cart[key].qty += delta;
+  if(cart[key].qty <= 0) delete cart[key];
+  // reset button
+  document.querySelectorAll('.item-add.added').forEach(b=>{
+    if(b.dataset.key === key && cart[key] === undefined){
+      b.classList.remove('added'); b.textContent='+';
+    }
+  });
+  updateCartUI();
+}
+
+function openCart(){ document.getElementById('cartModalBg').classList.add('open'); }
+function closeCart(){ document.getElementById('cartModalBg').classList.remove('open'); }
+
+function placeOrder(){
+  const items = Object.values(cart);
+  if(!items.length){ toast('Cart is empty!'); return; }
+  const total = items.reduce((a,i)=>a+i.price*i.qty,0);
+  const msg = items.map(i=>`${i.qty}× ${i.name} ₹${i.price*i.qty}`).join('%0A');
+  const wa = `https://wa.me/?text=Order from Lassi Magic:%0A${msg}%0A%0ATotal: ₹${total}`;
+  window.open(wa, '_blank');
+  toast('Order sent via WhatsApp! 🎉');
+  closeCart();
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────
+
+function toast(msg){
+  const tc = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<span>✦</span>${msg}`;
+  tc.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2500);
+}
+
+// ── SEARCH ──────────────────────────────────────────────────────────────
+
+function searchMenu(q){
+  const query = q.toLowerCase().trim();
+  document.querySelectorAll('.item-card').forEach(card=>{
+    const name = card.dataset.name.toLowerCase();
+    card.style.display = (!query || name.includes(query)) ? '' : 'none';
+  });
+  document.querySelectorAll('.section').forEach(sec=>{
+    const visible = [...sec.querySelectorAll('.item-card')].some(c=>c.style.display!=='none');
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+
+// ── BUILD MENU ──────────────────────────────────────────────────────────
+
+function buildMenu(){
+  const root = document.getElementById('menuRoot');
+  const nav = document.getElementById('nav');
+
+  MENU.forEach(sec=>{
+    // nav button
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.textContent = sec.emoji + ' ' + sec.label;
+    btn.id = 'nav-' + sec.id;
+    btn.onclick = ()=>{
+      document.getElementById('sec-'+sec.id).scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    nav.appendChild(btn);
+
+    // section
+    const section = document.createElement('div');
+    section.className = 'section ' + sec.cls;
+    section.id = 'sec-' + sec.id;
+    section.style.setProperty('--accent', sec.accent);
+
+    section.innerHTML = `
+      <div class="section-header">
+        <span class="section-emoji">${sec.emoji}</span>
+        <h2 class="section-title">${sec.label}</h2>
+        <span class="section-count">${sec.items.length} items</span>
+      </div>
+      <div class="items-grid" id="grid-${sec.id}"></div>
+    `;
+    root.appendChild(section);
+
+    const grid = section.querySelector('#grid-'+sec.id);
+    sec.items.forEach((item,i)=>{
+      const key = cartKey(sec.id, item.name);
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.dataset.name = item.name;
+      card.dataset.key = key;
+      card.innerHTML = `
+        <div class="item-info">
+          <div class="item-name">${item.name}</div>
+        </div>
+        <div class="item-price"><sup>₹</sup>${item.price}</div>
+        <button class="item-add" data-key="${key}" title="Add to order">+</button>
+      `;
+      card.querySelector('.item-add').addEventListener('click', e=>{
+        e.stopPropagation();
+        addToCart(sec.id, item.name, item.price, e.currentTarget);
+      });
+      grid.appendChild(card);
+    });
+  });
+}
+
+// ── INTERSECTION OBSERVER ──────────────────────────────────────────────
+
+function setupObserver(){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        // highlight nav
+        const id = e.target.id.replace('sec-','');
+        document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+        const nb = document.getElementById('nav-'+id);
+        if(nb){ nb.classList.add('active'); nb.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); }
+      }
+    });
+  },{threshold:.15, rootMargin:'-60px 0px -20% 0px'});
+
+  document.querySelectorAll('.section').forEach(s=>io.observe(s));
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+
+buildMenu();
+setupObserver();
+updateCartUI();
+
+// keyboard close
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCart(); });
+</script>
 </body>
 </html>
