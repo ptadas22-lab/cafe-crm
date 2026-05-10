@@ -1,227 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NBC & Fresh Cafe | Digital Menu</title>
+    
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<title>Lassi Magic Menu</title>
+    <style>
+        :root {
+            --bg: #FDFCFB;
+            --surface: #ffffff;
+            --primary: #3C2A21; /* Coffee Brown */
+            --accent: #D5CEA3; /* Gold */
+            --text: #1A1A1A;
+            --muted: #6D5D55;
+            --wa: #25D366;
+            --h-height: 210px; /* Space for the fixed header */
+        }
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
+        [data-theme="dark"] {
+            --bg: #121212;
+            --surface: #1E1E1E;
+            --primary: #D5CEA3;
+            --text: #F5F5F5;
+            --muted: #A0938E;
+        }
 
-body{
-  font-family:Arial, sans-serif;
-  background:#0a0e06;
-  color:#fff;
-  padding:20px;
-}
+        /* Prevent Layout Shifts */
+        html { scroll-behavior: smooth; scroll-padding-top: var(--h-height); }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
-/* HEADER */
-h1{
-  text-align:center;
-  font-size:40px;
-  margin-bottom:20px;
-  color:#c8f135;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #EAEAEA; /* Desktop background */
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+        }
 
-/* SECTION */
-.section{
-  margin-bottom:30px;
-}
+        /* Mobile Container - Keeps everything aligned */
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
 
-.section h2{
-  font-size:22px;
-  margin-bottom:10px;
-  color:#ffd60a;
-  border-bottom:1px solid #333;
-  padding-bottom:5px;
-}
+        /* Fixed Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg);
+            z-index: 2000;
+            padding: 15px 20px 10px;
+            border-bottom: 2px solid var(--accent);
+        }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:10px;
-}
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
 
-/* ITEM */
-.item{
-  display:flex;
-  justify-content:space-between;
-  background:#1a2010;
-  padding:12px 14px;
-  border-radius:8px;
-  font-size:15px;
-}
+        .brand { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--primary); }
 
-/* PRICE */
-.price{
-  color:#c8f135;
-  font-weight:bold;
-}
+        .search-row { position: relative; margin-bottom: 12px; }
+        .search-row i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+        #search {
+            width: 100%; padding: 12px 40px; border-radius: 12px;
+            border: 1px solid var(--accent); background: var(--surface);
+            color: var(--text); font-size: 16px; outline: none;
+        }
 
-/* MOBILE */
-@media(max-width:500px){
-  h1{font-size:28px;}
-}
-</style>
+        /* Navigation Chips */
+        .nav-scroll {
+            display: flex; overflow-x: auto; gap: 8px; padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .chip {
+            padding: 7px 15px; background: var(--surface); border: 1px solid var(--accent);
+            border-radius: 20px; white-space: nowrap; font-size: 12px;
+            font-weight: 700; text-decoration: none; color: var(--text);
+        }
+        .chip.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+
+        /* Main Menu Content */
+        .menu-content {
+            padding: var(--h-height) 20px 120px; /* Space so items are visible */
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin: 30px 0 15px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .item-card {
+            background: var(--surface);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .item-name { font-weight: 600; font-size: 14px; flex: 1; padding-right: 10px; }
+        .item-price { font-weight: 700; color: var(--primary); font-size: 15px; }
+
+        /* WhatsApp Button */
+        .wa-float {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 440px; background: var(--wa);
+            color: white; text-align: center; padding: 16px; border-radius: 15px;
+            text-decoration: none; font-weight: 700; z-index: 3000;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text); }
+        #noMatch { display: none; text-align: center; padding: 50px; color: var(--muted); }
+    </style>
 </head>
-
 <body>
 
-<h1>Lassi Magic</h1>
+<div class="app-container">
+    <header>
+        <div class="header-top">
+            <div class="brand">Nothing Before Coffee</div>
+            <button class="theme-btn" onclick="toggleTheme()"><i data-lucide="moon" id="t-icon"></i></button>
+        </div>
+        <div class="search-row">
+            <i data-lucide="search" size="18"></i>
+            <input type="text" id="search" placeholder="Search menu..." onkeyup="filter()">
+        </div>
+        <div class="nav-scroll">
+            <a href="#hot" class="chip active">Hot Coffee</a>
+            <a href="#icy" class="chip">Icy Drinks</a>
+            <a href="#lassi" class="chip">Fresh Lassi</a>
+            <a href="#falooda" class="chip">Falooda</a>
+            <a href="#shakes" class="chip">Shakes</a>
+            <a href="#pizza" class="chip">Pizza & Burgers</a>
+            <a href="#dessert" class="chip">Desserts</a>
+            <a href="#juice" class="chip">Fresh Juice</a>
+        </div>
+    </header>
 
-<!-- FRESH LASSI -->
-<div class="section">
-<h2>FRESH LASSI</h2>
-<div class="grid">
-<div class="item"><span>Sweet Lassi</span><span class="price">₹50</span></div>
-<div class="item"><span>Banana Lassi</span><span class="price">₹60</span></div>
-<div class="item"><span>Mango Lassi</span><span class="price">₹70</span></div>
-<div class="item"><span>Dry Fruit Lassi</span><span class="price">₹80</span></div>
-</div>
-</div>
+    <div class="menu-content">
+        <div id="noMatch">Item not found in menu.</div>
 
-<!-- FALOODA -->
-<div class="section">
-<h2>FALOODA</h2>
-<div class="grid">
-<div class="item"><span>Rose Falooda</span><span class="price">₹80</span></div>
-<div class="item"><span>Kesar Falooda</span><span class="price">₹90</span></div>
-<div class="item"><span>Royal Falooda</span><span class="price">₹115</span></div>
-<div class="item"><span>Paan Falooda</span><span class="price">₹100</span></div>
-</div>
-</div>
+        <!-- ☕ HOT COFFEE (NBC List) -->
+        <div class="section" id="hot">
+            <h2 class="section-title">☕ HOT COFFEE</h2>
+            <div class="item-card" data-n="espresso"> <span class="item-name">Espresso</span> <span class="item-price">₹99</span> </div>
+            <div class="item-card" data-n="dark latte"> <span class="item-name">Dark Latte</span> <span class="item-price">₹129</span> </div>
+            <div class="item-card" data-n="cafe mocha"> <span class="item-name">Café Mocha</span> <span class="item-price">₹149</span> </div>
+            <div class="item-card" data-n="caramel cappuccino"> <span class="item-name">Caramel Cappuccino Latte</span> <span class="item-price">₹159</span> </div>
+            <div class="item-card" data-n="tiramisu cappuccino"> <span class="item-name">Tiramisu Cappuccino Latte</span> <span class="item-price">₹159</span> </div>
+            <div class="item-card" data-n="hot chocolate"> <span class="item-name">Hot Chocolate</span> <span class="item-price">₹115</span> </div>
+            <div class="item-card" data-n="hot nutella"> <span class="item-name">Hot Nutella</span> <span class="item-price">₹125</span> </div>
+            <div class="item-card" data-n="green tea"> <span class="item-name">Green Tea</span> <span class="item-price">₹93</span> </div>
+        </div>
 
-<!-- ICE CREAM -->
-<div class="section">
-<h2>ICE CREAM SCOOPS</h2>
-<div class="grid">
-<div class="item"><span>Mango / Strawberry</span><span class="price">₹40</span></div>
-<div class="item"><span>Black Current / Butterscotch</span><span class="price">₹40</span></div>
-<div class="item"><span>Nutella / Pistachio / Butterscotch</span><span class="price">₹50</span></div>
-</div>
-</div>
+        <!-- 🥛 FRESH LASSI (New List) -->
+        <div class="section" id="lassi">
+            <h2 class="section-title">🥛 FRESH LASSI</h2>
+            <div class="item-card" data-n="sweet lassi"> <span class="item-name">Sweet Lassi</span> <span class="item-price">₹50</span> </div>
+            <div class="item-card" data-n="banana lassi"> <span class="item-name">Banana Lassi</span> <span class="item-price">₹60</span> </div>
+            <div class="item-card" data-n="mango lassi"> <span class="item-name">Mango Lassi</span> <span class="item-price">₹70</span> </div>
+            <div class="item-card" data-n="dry fruit lassi"> <span class="item-name">Dry Fruit Lassi</span> <span class="item-price">₹80</span> </div>
+        </div>
 
-<!-- DESSERTS -->
-<div class="section">
-<h2>DESSERTS & SUNDAES</h2>
-<div class="grid">
-<div class="item"><span>Hot Brownie / Choco Fudge</span><span class="price">₹80</span></div>
-<div class="item"><span>Fruit Salad / Fried Brownie</span><span class="price">₹80</span></div>
-<div class="item"><span>Boing</span><span class="price">₹70</span></div>
-<div class="item"><span>Nutella Fudge</span><span class="price">₹100</span></div>
-<div class="item"><span>Death by Chocolate / Nutella Sundae</span><span class="price">₹120</span></div>
-<div class="item"><span>Coconut Sundae / Choco Oreo Sundae</span><span class="price">₹110</span></div>
-<div class="item"><span>Brownie Sizzler / Nutella Sizzler</span><span class="price">₹170</span></div>
-</div>
-</div>
+        <!-- 🍧 FALOODA -->
+        <div class="section" id="falooda">
+            <h2 class="section-title">🍧 FALOODA</h2>
+            <div class="item-card" data-n="rose falooda"> <span class="item-name">Rose Falooda</span> <span class="item-price">₹80</span> </div>
+            <div class="item-card" data-n="kesar falooda"> <span class="item-name">Kesar Falooda</span> <span class="item-price">₹90</span> </div>
+            <div class="item-card" data-n="royal falooda"> <span class="item-name">Royal Falooda</span> <span class="item-price">₹115</span> </div>
+            <div class="item-card" data-n="paan falooda"> <span class="item-name">Paan Falooda</span> <span class="item-price">₹100</span> </div>
+        </div>
 
-<!-- CAKE SHAKE -->
-<div class="section">
-<h2>CAKE SHAKE</h2>
-<div class="grid">
-<div class="item"><span>Choco Truffle</span><span class="price">₹130</span></div>
-<div class="item"><span>Choco Oreo</span><span class="price">₹130</span></div>
-<div class="item"><span>Snickers / Mud Coffee / Mud Oreo</span><span class="price">₹130</span></div>
-<div class="item"><span>Coconut / Butterscotch</span><span class="price">₹130</span></div>
-</div>
-</div>
+        <!-- 🥤 SHAKES (Combined) -->
+        <div class="section" id="shakes">
+            <h2 class="section-title">🥤 SHAKES</h2>
+            <div class="item-card" data-n="choco truffle cake shake"> <span class="item-name">Choco Truffle Cake Shake</span> <span class="item-price">₹130</span> </div>
+            <div class="item-card" data-n="belgian chocolate shake"> <span class="item-name">Belgian Chocolate Shake</span> <span class="item-price">₹90</span> </div>
+            <div class="item-card" data-n="oreo shake"> <span class="item-name">Oreo Shake</span> <span class="item-price">₹115</span> </div>
+            <div class="item-card" data-n="kitkat shake"> <span class="item-name">Kitkat Shake</span> <span class="item-price">₹90</span> </div>
+            <div class="item-card" data-n="lotus biscoff shake"> <span class="item-name">Lotus Biscoff Shake</span> <span class="item-price">₹175</span> </div>
+            <div class="item-card" data-n="apple fruit shake"> <span class="item-name">Apple Fruit Shake</span> <span class="item-price">₹70</span> </div>
+            <div class="item-card" data-n="muskmelon shake"> <span class="item-name">Muskmelon Shake</span> <span class="item-price">₹70</span> </div>
+        </div>
 
-<!-- CHOCOLATE SHAKES -->
-<div class="section">
-<h2>CHOCOLATE SHAKES</h2>
-<div class="grid">
-<div class="item"><span>Belgian Chocolate</span><span class="price">₹90</span></div>
-<div class="item"><span>Watermelon</span><span class="price">₹70</span></div>
-<div class="item"><span>Vanilla</span><span class="price">₹70</span></div>
-<div class="item"><span>Kitkat</span><span class="price">₹90</span></div>
-<div class="item"><span>Mango</span><span class="price">₹80</span></div>
-<div class="item"><span>Hazelnut Pineapple</span><span class="price">₹110</span></div>
-<div class="item"><span>Death by Chocolate</span><span class="price">₹120</span></div>
-</div>
-</div>
+        <!-- 🍕 PIZZA & SNACKS -->
+        <div class="section" id="pizza">
+            <h2 class="section-title">🍕 PIZZA & SNACKS</h2>
+            <div class="item-card" data-n="regular pizza"> <span class="item-name">Regular Pizza</span> <span class="item-price">₹120</span> </div>
+            <div class="item-card" data-n="large pizza"> <span class="item-name">Large Pizza</span> <span class="item-price">₹180</span> </div>
+            <div class="item-card" data-n="big burger"> <span class="item-name">Big Burgers</span> <span class="item-price">₹120</span> </div>
+            <div class="item-card" data-n="grilled sandwich"> <span class="item-name">Grilled Sandwich</span> <span class="item-price">₹90</span> </div>
+            <div class="item-card" data-n="maggi masala"> <span class="item-name">Maggi Masala</span> <span class="item-price">₹80</span> </div>
+            <div class="item-card" data-n="hash browns"> <span class="item-name">Hash Browns</span> <span class="item-price">₹80</span> </div>
+        </div>
 
-<!-- FRUIT SHAKES -->
-<div class="section">
-<h2>FRUIT SHAKES</h2>
-<div class="grid">
-<div class="item"><span>Apple</span><span class="price">₹70</span></div>
-<div class="item"><span>Musk Melon</span><span class="price">₹70</span></div>
-<div class="item"><span>Franco Mocha</span><span class="price">₹80</span></div>
-<div class="item"><span>Chikoo</span><span class="price">₹80</span></div>
-<div class="item"><span>Tropical Mix Fruit</span><span class="price">₹90</span></div>
-<div class="item"><span>Hazelnut Strawberry</span><span class="price">₹110</span></div>
-<div class="item"><span>Mix Fruit</span><span class="price">₹80</span></div>
-</div>
-</div>
+        <!-- 🍰 DESSERTS -->
+        <div class="section" id="dessert">
+            <h2 class="section-title">🍰 DESSERTS</h2>
+            <div class="item-card" data-n="hot brownie fudge"> <span class="item-name">Hot Brownie / Choco Fudge</span> <span class="item-price">₹80</span> </div>
+            <div class="item-card" data-n="death by chocolate"> <span class="item-name">Death by Chocolate</span> <span class="item-price">₹120</span> </div>
+            <div class="item-card" data-n="brownie sizzler"> <span class="item-name">Brownie Sizzler</span> <span class="item-price">₹170</span> </div>
+            <div class="item-card" data-n="ice cream scoop"> <span class="item-name">Ice Cream Scoop (All Flavors)</span> <span class="item-price">₹40-50</span> </div>
+        </div>
 
-<!-- COLD COFFEE -->
-<div class="section">
-<h2>COLD COFFEE</h2>
-<div class="grid">
-<div class="item"><span>Black Rock Coffee</span><span class="price">₹90</span></div>
-<div class="item"><span>Belgium Coffee</span><span class="price">₹100</span></div>
-<div class="item"><span>Franco Coffee</span><span class="price">₹110</span></div>
-<div class="item"><span>Caramel Coffee</span><span class="price">₹120</span></div>
-<div class="item"><span>Tropical Mix Coffee</span><span class="price">₹130</span></div>
-</div>
-</div>
+        <!-- 🍊 FRESH JUICE -->
+        <div class="section" id="juice">
+            <h2 class="section-title">🍊 FRESH JUICE</h2>
+            <div class="item-card" data-n="orange juice"> <span class="item-name">Orange Juice</span> <span class="item-price">₹60</span> </div>
+            <div class="item-card" data-n="watermelon juice"> <span class="item-name">Watermelon Juice</span> <span class="item-price">₹60</span> </div>
+            <div class="item-card" data-n="mango juice"> <span class="item-name">Mango Juice</span> <span class="item-price">₹70</span> </div>
+            <div class="item-card" data-n="mixed fruit with lime"> <span class="item-name">Mixed Fruit with Lime</span> <span class="item-price">₹110</span> </div>
+        </div>
+    </div>
 
-<!-- HOT DRINK -->
-<div class="section">
-<h2>HOT DRINK</h2>
-<div class="grid">
-<div class="item"><span>Hot Coffee</span><span class="price">₹60</span></div>
-<div class="item"><span>Hot Chocolate</span><span class="price">₹80</span></div>
-<div class="item"><span>Horlicks</span><span class="price">₹70</span></div>
-</div>
+    <a href="https://wa.me/919999999999" class="wa-float" target="_blank">Order on WhatsApp</a>
 </div>
 
-<!-- SODA -->
-<div class="section">
-<h2>SODA POPS</h2>
-<div class="grid">
-<div class="item"><span>Various Soda Items</span><span class="price">₹40–₹60</span></div>
-</div>
-</div>
+<script>
+    lucide.createIcons();
 
-<!-- FRESH JUICE -->
-<div class="section">
-<h2>FRESH JUICE</h2>
-<div class="grid">
-<div class="item"><span>Orange</span><span class="price">₹60</span></div>
-<div class="item"><span>Watermelon</span><span class="price">₹60</span></div>
-<div class="item"><span>Mango</span><span class="price">₹70</span></div>
-<div class="item"><span>Muskmelon</span><span class="price">₹70</span></div>
-<div class="item"><span>Mixed Fruit with Lime</span><span class="price">₹110</span></div>
-</div>
-</div>
+    function toggleTheme() {
+        const b = document.body; const i = document.getElementById('t-icon');
+        const isD = b.getAttribute('data-theme') === 'dark';
+        if (isD) { b.removeAttribute('data-theme'); i.setAttribute('data-lucide', 'moon'); }
+        else { b.setAttribute('data-theme', 'dark'); i.setAttribute('data-lucide', 'sun'); }
+        lucide.createIcons();
+    }
 
-<!-- PIZZA -->
-<div class="section">
-<h2>FRESH PIZZA</h2>
-<div class="grid">
-<div class="item"><span>Regular Pizza</span><span class="price">₹120</span></div>
-<div class="item"><span>Large Pizza</span><span class="price">₹180</span></div>
-</div>
-</div>
+    function filter() {
+        let val = document.getElementById('search').value.toLowerCase();
+        let cards = document.querySelectorAll('.item-card');
+        let sections = document.querySelectorAll('.section');
+        let count = 0;
+        cards.forEach(c => {
+            if(c.getAttribute('data-n').includes(val)) { c.style.display = 'flex'; count++; }
+            else c.style.display = 'none';
+        });
+        sections.forEach(s => {
+            let has = s.querySelectorAll('.item-card[style="display: flex;"]').length > 0;
+            s.style.display = (has || val === "") ? 'block' : 'none';
+        });
+        document.getElementById('noMatch').style.display = (count === 0 && val !== "") ? 'block' : 'none';
+    }
 
-<!-- EAT ALL -->
-<div class="section">
-<h2>EAT ALL YOU WANT</h2>
-<div class="grid">
-<div class="item"><span>Hash Browns</span><span class="price">₹80</span></div>
-<div class="item"><span>Grilled Sandwich</span><span class="price">₹90</span></div>
-<div class="item"><span>Big Burgers</span><span class="price">₹120</span></div>
-<div class="item"><span>Maggi Masala</span><span class="price">₹80</span></div>
-</div>
-
-<h3 style="margin-top:10px;color:#aaa;">Add Ons</h3>
-<div class="grid">
-<div class="item"><span>Cheese / Corn / Chilli</span><span class="price">₹20</span></div>
-</div>
-</div>
+    window.addEventListener('scroll', () => {
+        let curr = "";
+        document.querySelectorAll('.section').forEach(s => {
+            if (pageYOffset >= s.offsetTop - 250) curr = s.getAttribute("id");
+        });
+        document.querySelectorAll(".chip").forEach(c => {
+            c.classList.remove("active");
+            if (c.getAttribute("href") === `#${curr}`) c.classList.add("active");
+        });
+    });
+</script>
 
 </body>
 </html>
